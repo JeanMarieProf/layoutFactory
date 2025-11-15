@@ -1,0 +1,99 @@
+/* styles.css */
+:root {
+    --primary-color: #4a6fa5;
+    --secondary-color: #6b8cbc;
+    --background-color: #f5f7fa;
+    --text-color: #333;
+    --card-bg: #fff;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.palette-1 {
+    --primary-color: #4a6fa5;
+    --secondary-color: #6b8cbc;
+    --background-color: #f5f7fa;
+    --text-color: #333;
+    --card-bg: #fff;
+}
+
+.palette-2 {
+    --primary-color: #2c5530;
+    --secondary-color: #4a7c59;
+    --background-color: #f1f8e9;
+    --text-color: #1b5e20;
+    --card-bg: #e8f5e9;
+}
+
+.palette-3 {
+    --primary-color: #7b1fa2;
+    --secondary-color: #9c27b0;
+    --background-color: #f3e5f5;
+    --text-color: #4a148c;
+    --card-bg: #f3e5f5;
+}
+
+.palette-4 {
+    --primary-color: #d32f2f;
+    --secondary-color: #f44336;
+    --background-color: #ffebee;
+    --text-color: #b71c1c;
+    --card-bg: #ffcdd2;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    transition: all 0.3s ease;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    position: relative;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.description {
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: 0 auto 15px;
+}
+
+.json-link {
+    color: white;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+}
+
+.json-link:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* ... (reste du CSS identique à la version précédente) ... */

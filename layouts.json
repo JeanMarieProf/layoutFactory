@@ -1,0 +1,279 @@
+{
+  "layouts": [
+    {
+      "id": 1,
+      "name": "Colonne unique",
+      "description": "Un seul flux vertical de contenu (titre → texte → médias).",
+      "usage": "Articles de blog, pages de documentation, pages marketing mobiles-first.",
+      "technique": "max-width centré, padding, flow normal. Très simple à rendre accessible.",
+      "advantage": "Lisibilité optimale sur mobile.",
+      "disadvantage": "Peu d'options latérales pour navigation/CTA.",
+      "tags": ["Simple", "Mobile-first", "Accessible"],
+      "visualization": "single-column"
+    },
+    {
+      "id": 2,
+      "name": "Sidebar fixe",
+      "description": "Contenu principal + barre latérale (navigation, filtres, widgets).",
+      "usage": "Dashboards, panels d'administration, sites e-commerce avec filtres.",
+      "technique": "CSS Grid / Flexbox ou position: sticky pour sidebar. Cacher ou basculer en off-canvas sur mobile.",
+      "advantage": "Navigation facile et accès rapide aux fonctionnalités.",
+      "disadvantage": "Peut réduire l'espace de contenu principal sur petits écrans.",
+      "tags": ["Navigation", "Dashboard", "Responsive"],
+      "visualization": "sidebar-layout"
+    },
+    {
+      "id": 3,
+      "name": "Trois colonnes",
+      "description": "Menu / contenu principal / outils secondaires.",
+      "usage": "IDE web, panneaux d'édition, portails d'info complexes.",
+      "technique": "CSS Grid à 3 colonnes. Réduire à 1 ou 2 colonnes selon breakpoint.",
+      "advantage": "Beaucoup d'information accessible simultanément.",
+      "disadvantage": "Complexe à gérer sur petits écrans.",
+      "tags": ["Complexe", "Productivité", "Multi-panneaux"],
+      "visualization": "three-columns"
+    },
+    {
+      "id": 4,
+      "name": "Layout en grille de cartes",
+      "description": "Série de cartes (produits, posts, ressources) organisées en grille.",
+      "usage": "Catalogue, galerie, blog index.",
+      "technique": "grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) pour responsive; gap pour espacement.",
+      "advantage": "Présentation visuelle attractive et organisée.",
+      "disadvantage": "Peut nécessiter beaucoup d'espace vertical.",
+      "tags": ["Visuel", "Catalogue", "Responsive"],
+      "visualization": "card-grid"
+    },
+    {
+      "id": 5,
+      "name": "Hero + contenu",
+      "description": "Grand bandeau d'ouverture (image/CTA) suivi de sections modulaires.",
+      "usage": "Landing pages, pages produit.",
+      "technique": "vh pour hero; sections en container avec max-width.",
+      "advantage": "Impact visuel fort et parcours utilisateur guidé.",
+      "disadvantage": "Peut augmenter le temps de chargement.",
+      "tags": ["Marketing", "Conversion", "Visuel"],
+      "visualization": "hero-layout"
+    },
+    {
+      "id": 6,
+      "name": "Split-screen",
+      "description": "Page scindée en deux verticalement (texte vs image / deux produits).",
+      "usage": "Présentation produit comparatif, page d'accueil créative.",
+      "technique": "Flexbox ou Grid 2 colonnes, prévoir collapse en stack sur mobile.",
+      "advantage": "Comparaison directe et design moderne.",
+      "disadvantage": "Peut être difficile à équilibrer visuellement.",
+      "tags": ["Moderne", "Comparaison", "Créatif"],
+      "visualization": "split-screen"
+    },
+    {
+      "id": 7,
+      "name": "Off-canvas navigation",
+      "description": "Menu caché qui glisse depuis un côté (mobile ou desktop).",
+      "usage": "Navigation mobile, webapps où l'espace doit rester libre.",
+      "technique": "Transform + transition ou position: fixed; accessibilité : focus trap, aria attributes.",
+      "advantage": "Économie d'espace et expérience utilisateur moderne.",
+      "disadvantage": "Navigation moins visible (peut réduire la découvrabilité).",
+      "tags": ["Mobile", "Espace", "Moderne"],
+      "visualization": "off-canvas"
+    },
+    {
+      "id": 8,
+      "name": "Layout « App shell »",
+      "description": "En-tête + barre latérale + zone de contenu dynamique (route-based).",
+      "usage": "Applications web (mail, CRM, IDE).",
+      "technique": "Shell chargé une fois ; contenu injecté via router/JS. Cache service worker possible.",
+      "advantage": "Performance et expérience utilisateur fluide.",
+      "disadvantage": "Complexité de développement accrue.",
+      "tags": ["SPA", "Performance", "Application"],
+      "visualization": "app-shell"
+    },
+    {
+      "id": 9,
+      "name": "Cards + Masonry",
+      "description": "Cartes de hauteurs variables organisées en colonnes.",
+      "usage": "Galleries d'images, portfolios.",
+      "technique": "Masonry JS ou grid-auto-rows + grid-row: span n calculé ; CSS Columns pour alternative.",
+      "advantage": "Utilisation optimale de l'espace et design dynamique.",
+      "disadvantage": "Peut être difficile à rendre accessible.",
+      "tags": ["Gallerie", "Dynamique", "Visuel"],
+      "visualization": "masonry"
+    },
+    {
+      "id": 10,
+      "name": "Magazine / Newspaper",
+      "description": "Grille asymétrique, articles de différentes tailles, éléments mis en avant.",
+      "usage": "Sites média, magazines en ligne.",
+      "technique": "CSS Grid avec zones nommées (grid-template-areas) pour contrôler mise en page.",
+      "advantage": "Hiérarchie visuelle claire et design éditorial riche.",
+      "disadvantage": "Complexité de mise en œuvre et maintenance.",
+      "tags": ["Éditorial", "Hiérarchie", "Complexe"],
+      "visualization": "magazine"
+    },
+    {
+      "id": 11,
+      "name": "Dashboard",
+      "description": "Grille modulaire de widgets (statistiques, graphiques).",
+      "usage": "Interfaces d'administration, analytics.",
+      "technique": "CSS Grid + librairie ddraggable/resizable (interactions), gestion des breakpoints.",
+      "advantage": "Personnalisation et vue d'ensemble des données.",
+      "disadvantage": "Peut devenir désordonné si mal organisé.",
+      "tags": ["Données", "Modulaire", "Personnalisable"],
+      "visualization": "dashboard"
+    },
+    {
+      "id": 12,
+      "name": "Tableau / liste détaillée",
+      "description": "Tableaux riches, avec en-ligne actions, colonnes triables.",
+      "usage": "Back-office, CRM, listes d'utilisateurs.",
+      "technique": "<table> pour données tabulaires ; responsive : collapse to cards; ARIA pour tri.",
+      "advantage": "Présentation structurée de données complexes.",
+      "disadvantage": "Peut être difficile à rendre responsive.",
+      "tags": ["Données", "Tableau", "Structured"],
+      "visualization": "table-layout"
+    },
+    {
+      "id": 13,
+      "name": "Galerie / Lightbox-centric",
+      "description": "Grille d'images + ouverture en lightbox/visu plein écran.",
+      "usage": "Photographies, portfolios.",
+      "technique": "Grid + lightbox accessible (focus trap, navigation clavier).",
+      "advantage": "Expérience immersive pour le contenu visuel.",
+      "disadvantage": "Peut être lourd en termes de performance.",
+      "tags": ["Visuel", "Immersion", "Gallerie"],
+      "visualization": "gallery-layout"
+    },
+    {
+      "id": 14,
+      "name": "Timeline / Fil d'événements",
+      "description": "Liste ordonnée chronologiquement (verticale ou horizontale).",
+      "usage": "Historique, roadmap, journaux.",
+      "technique": "Flexbox vertical + marqueurs, ou horizontal scroll pour timeline longue.",
+      "advantage": "Représentation claire de la chronologie.",
+      "disadvantage": "Peut prendre beaucoup d'espace vertical.",
+      "tags": ["Chronologie", "Historique", "Narrative"],
+      "visualization": "timeline"
+    },
+    {
+      "id": 15,
+      "name": "Landing minimal / centered CTA",
+      "description": "Centre unique d'attention avec CTA, peu de navigation.",
+      "usage": "Pages de conversion, annonces.",
+      "technique": "Flexbox centré verticalement (min-height:100vh), contraste fort, micro-interactions.",
+      "advantage": "Focus total sur l'action principale.",
+      "disadvantage": "Peut manquer de contexte ou d'information supplémentaire.",
+      "tags": ["Conversion", "Minimal", "Focus"],
+      "visualization": "minimal-landing"
+    },
+    {
+      "id": 16,
+      "name": "Map-centric",
+      "description": "Grande carte avec panneau(s) d'information/clustering.",
+      "usage": "Services géolocalisés, immobilier, planificateur d'itinéraire.",
+      "technique": "Map (Leaflet/Mapbox) en background ou iframe ; sidebar pour détails. Attention au lazy load.",
+      "advantage": "Visualisation géographique intuitive.",
+      "disadvantage": "Performance peut être affectée avec des cartes complexes.",
+      "tags": ["Géolocalisation", "Carte", "Interactif"],
+      "visualization": "map-layout"
+    },
+    {
+      "id": 17,
+      "name": "Full-bleed sections",
+      "description": "Sections alternées qui s'étendent sur toute la largeur (images, couleurs).",
+      "usage": "Sites modernes, storytelling, portfolio.",
+      "technique": "Containers internes pour limiter le texte, background plein width.",
+      "advantage": "Design moderne et impact visuel fort.",
+      "disadvantage": "Peut être difficile à équilibrer sur tous les écrans.",
+      "tags": ["Moderne", "Visuel", "Storytelling"],
+      "visualization": "full-bleed"
+    },
+    {
+      "id": 18,
+      "name": "Parallax / Scrollytelling",
+      "description": "Effets de parallaxe ou sections animées lors du scroll.",
+      "usage": "Récits immersifs, sites de marque.",
+      "technique": "CSS background-attachment (limité) ou JS Scroll-based (IntersectionObserver / requestAnimationFrame). Attention perf & accessibilité.",
+      "advantage": "Expérience utilisateur immersive et engageante.",
+      "disadvantage": "Problèmes potentiels de performance et accessibilité.",
+      "tags": ["Animation", "Immersion", "Engagement"],
+      "visualization": "parallax"
+    },
+    {
+      "id": 19,
+      "name": "Asymétrique / Broken grid",
+      "description": "Layout volontairement non symétrique pour impact visuel.",
+      "usage": "Créatifs, landing expérimental.",
+      "technique": "CSS Grid et positionnement absolu ; penser au flow pour mobile.",
+      "advantage": "Design unique et mémorable.",
+      "disadvantage": "Peut nuire à la lisibilité et à l'expérience utilisateur.",
+      "tags": ["Créatif", "Expérimental", "Unique"],
+      "visualization": "asymmetric"
+    },
+    {
+      "id": 20,
+      "name": "Modal-centric / single action flow",
+      "description": "Page simple qui déclenche des workflows en modales (ex : formulaire pas à pas).",
+      "usage": "Checkout rapide, onboarding.",
+      "technique": "Focus management, fallback keyboard navigation, accessible forms.",
+      "advantage": "Processus guidé et focalisé.",
+      "disadvantage": "Peut interrompre le flux de navigation principal.",
+      "tags": ["Workflow", "Formulaire", "Guidé"],
+      "visualization": "modal-layout"
+    },
+    {
+      "id": 21,
+      "name": "Progressive Reveal / Accordion-heavy",
+      "description": "Contenu empaqueté en accordéons / sections rétractables.",
+      "usage": "FAQ, docs compressées, panneaux de configuration.",
+      "technique": "<details> natif ou JS ; conserver aria-expanded.",
+      "advantage": "Économie d'espace et organisation hiérarchique.",
+      "disadvantage": "Contenu moins visible (nécessite des interactions).",
+      "tags": ["Organisation", "Espace", "Hiérarchique"],
+      "visualization": "accordion-layout"
+    },
+    {
+      "id": 22,
+      "name": "Search-first layout",
+      "description": "Barre de recherche proéminente avec résultats dynamiques.",
+      "usage": "Marketplaces, docs, knowledge base.",
+      "technique": "Input-centric, debounce, suggestions accessible via aria-activedescendant.",
+      "advantage": "Accès rapide au contenu recherché.",
+      "disadvantage": "Peut négliger la navigation traditionnelle.",
+      "tags": ["Recherche", "Rapidité", "Focalisé"],
+      "visualization": "search-layout"
+    },
+    {
+      "id": 23,
+      "name": "Multi-step flow / Wizard",
+      "description": "Formulaire séquencé par étapes avec progression.",
+      "usage": "Inscription complexe, configuration produit.",
+      "technique": "Routerless state machine, sauvegarde d'état, gestion d'erreurs et validations.",
+      "advantage": "Réduction de la complexité perçue.",
+      "disadvantage": "Peut allonger le processus de complétion.",
+      "tags": ["Formulaire", "Étapes", "Progression"],
+      "visualization": "multi-step"
+    },
+    {
+      "id": 24,
+      "name": "Embedded content-centric",
+      "description": "Page construite autour de contenus tiers (vidéos, iframes, widgets).",
+      "usage": "Portfolios avec embeds, agrégateurs.",
+      "technique": "Lazy loading, sizes containers, sandboxing pour sécurité.",
+      "advantage": "Intégration de contenus externes sans friction.",
+      "disadvantage": "Dépendance à des services tiers et problèmes de performance potentiels.",
+      "tags": ["Intégration", "Tiers", "Multimédia"],
+      "visualization": "embedded-layout"
+    },
+    {
+      "id": 25,
+      "name": "Hybrid desktop/immersive",
+      "description": "Combinaison d'éléments de bureau traditionnels et d'expériences immersives.",
+      "usage": "Applications web complexes, outils créatifs.",
+      "technique": "Combinaison de plusieurs techniques selon les zones de l'interface.",
+      "advantage": "Flexibilité et adaptation à différents types de contenu.",
+      "disadvantage": "Risque de manque de cohérence visuelle.",
+      "tags": ["Hybride", "Flexible", "Complexe"],
+      "visualization": "hybrid-layout"
+    }
+  ]
+}

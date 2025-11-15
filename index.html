@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery de Layouts Web</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="palette-1">
+    <div class="container">
+        <header>
+            <h1>Gallery de Layouts Web</h1>
+            <p class="description">Explorez 25 modèles de mise en page web avec descriptions détaillées</p>
+            <a href="json-viewer.html" class="json-link">📊 Voir les données JSON</a>
+        </header>
+
+        <div class="controls">
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Rechercher un layout...">
+            </div>
+            <div class="palette-selector">
+                <div class="palette-btn active" data-palette="palette-1"></div>
+                <div class="palette-btn" data-palette="palette-2"></div>
+                <div class="palette-btn" data-palette="palette-3"></div>
+                <div class="palette-btn" data-palette="palette-4"></div>
+            </div>
+        </div>
+
+        <div class="pagination">
+            <button class="page-btn active" data-page="1">Layouts 1-12</button>
+            <button class="page-btn" data-page="2">Layouts 13-25</button>
+        </div>
+
+        <div class="page active" id="page-1">
+            <div class="layouts-grid" id="layouts-container-1"></div>
+        </div>
+
+        <div class="page" id="page-2">
+            <div class="layouts-grid" id="layouts-container-2"></div>
+        </div>
+    </div>
+
+    <div class="layout-detail" id="layout-detail">
+        <div class="detail-content">
+            <button class="close-btn" id="close-detail">&times;</button>
+            <div id="detail-content"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

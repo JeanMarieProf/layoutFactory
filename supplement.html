@@ -1,0 +1,3111 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie de Layouts Web</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #6b8cbc;
+            --background-color: #f5f7fa;
+            --text-color: #333;
+            --card-bg: #fff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .palette-1 {
+            --primary-color: #4a6fa5;
+            --secondary-color: #6b8cbc;
+            --background-color: #f5f7fa;
+            --text-color: #333;
+            --card-bg: #fff;
+        }
+
+        .palette-2 {
+            --primary-color: #2c5530;
+            --secondary-color: #4a7c59;
+            --background-color: #f1f8e9;
+            --text-color: #1b5e20;
+            --card-bg: #e8f5e9;
+        }
+
+        .palette-3 {
+            --primary-color: #7b1fa2;
+            --secondary-color: #9c27b0;
+            --background-color: #f3e5f5;
+            --text-color: #4a148c;
+            --card-bg: #f3e5f5;
+        }
+
+        .palette-4 {
+            --primary-color: #d32f2f;
+            --secondary-color: #f44336;
+            --background-color: #ffebee;
+            --text-color: #b71c1c;
+            --card-bg: #ffcdd2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 12px;
+            padding: 12px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 6px;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+
+        .search-container {
+            justify-self: start;
+        }
+
+        #search {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--secondary-color);
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .palette-selector {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-self: end;
+        }
+
+        .palette-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid white;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .palette-btn.active {
+            border: 2px solid var(--text-color);
+        }
+
+        .palette-btn:nth-child(1) {
+            background: linear-gradient(135deg, #4a6fa5 50%, #6b8cbc 50%);
+        }
+
+        .palette-btn:nth-child(2) {
+            background: linear-gradient(135deg, #2c5530 50%, #4a7c59 50%);
+        }
+
+        .palette-btn:nth-child(3) {
+            background: linear-gradient(135deg, #7b1fa2 50%, #9c27b0 50%);
+        }
+
+        .palette-btn:nth-child(4) {
+            background: linear-gradient(135deg, #d32f2f 50%, #f44336 50%);
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .page-btn {
+            padding: 8px 16px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .page-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .page-info {
+            padding: 6px 12px;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .layouts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            min-height: 500px;
+        }
+
+        .layout-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .layout-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .layout-preview {
+            height: 180px;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .layout-id {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            z-index: 10;
+        }
+
+        .layout-info {
+            padding: 15px;
+        }
+
+        .layout-name {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .layout-description {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .layout-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .tag {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        .layout-detail {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .layout-detail.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .detail-content {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .detail-header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--secondary-color);
+            padding-bottom: 15px;
+        }
+
+        .detail-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .detail-description {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .detail-section {
+            margin-bottom: 20px;
+        }
+
+        .detail-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .detail-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .detail-tag {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .visual-preview {
+            height: 300px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-weight: bold;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Styles pour les aperçus visuels */
+        .preview-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* Layout 1: Colonne unique */
+        .single-column {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 10px;
+            height: 100%;
+        }
+
+        .single-column .header {
+            height: 20px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .single-column .content {
+            flex: 1;
+            background-color: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        .single-column .media {
+            height: 60px;
+            background-color: #8ca8d0;
+            border-radius: 2px;
+        }
+
+        /* Layout 2: Sidebar fixe */
+        .sidebar-layout {
+            display: flex;
+            height: 100%;
+        }
+
+        .sidebar-layout .sidebar {
+            width: 30%;
+            background-color: var(--primary-color);
+            padding: 10px;
+        }
+
+        .sidebar-layout .sidebar-item {
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 8px;
+            border-radius: 2px;
+        }
+
+        .sidebar-layout .main-content {
+            flex: 1;
+            background-color: var(--secondary-color);
+            padding: 10px;
+        }
+
+        .sidebar-layout .content-block {
+            height: 15px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 8px;
+            border-radius: 2px;
+        }
+
+        /* Layout 3: Trois colonnes */
+        .three-columns {
+            display: flex;
+            height: 100%;
+        }
+
+        .three-columns .left {
+            width: 20%;
+            background-color: var(--primary-color);
+            padding: 10px;
+        }
+
+        .three-columns .center {
+            width: 60%;
+            background-color: var(--secondary-color);
+            padding: 10px;
+        }
+
+        .three-columns .right {
+            width: 20%;
+            background-color: #8ca8d0;
+            padding: 10px;
+        }
+
+        .three-columns .menu-item,
+        .three-columns .content-item,
+        .three-columns .tool-item {
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 8px;
+            border-radius: 2px;
+        }
+
+        /* Layout 4: Grille de cartes */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            padding: 10px;
+            height: 100%;
+        }
+
+        .card-grid .card {
+            background-color: var(--primary-color);
+            border-radius: 4px;
+            padding: 8px;
+        }
+
+        .card-grid .card-header {
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 6px;
+            border-radius: 2px;
+        }
+
+        .card-grid .card-content {
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+        }
+
+        /* Layout 5: Hero + contenu */
+        .hero-layout {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .hero-layout .hero {
+            height: 40%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .hero-layout .sections {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 10px;
+        }
+
+        .hero-layout .section {
+            flex: 1;
+            background-color: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        /* Layout 6: Split-screen */
+        .split-screen {
+            display: flex;
+            height: 100%;
+        }
+
+        .split-screen .left-panel {
+            width: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .split-screen .right-panel {
+            width: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        /* Layout 7: Off-canvas */
+        .off-canvas {
+            display: flex;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .off-canvas .main {
+            flex: 1;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .off-canvas .menu-toggle {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 20px;
+            height: 15px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 2px;
+        }
+
+        .off-canvas .drawer {
+            position: absolute;
+            top: 0;
+            left: -60%;
+            width: 60%;
+            height: 100%;
+            background-color: var(--primary-color);
+            transition: left 0.3s ease;
+        }
+
+        .off-canvas:hover .drawer {
+            left: 0;
+        }
+
+        .off-canvas .drawer-item {
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin: 10px;
+            border-radius: 2px;
+        }
+
+        /* Layout 8: App shell */
+        .app-shell {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .app-shell .header {
+            height: 15%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .app-shell .header .logo {
+            width: 40px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+
+        .app-shell .main-area {
+            display: flex;
+            flex: 1;
+        }
+
+        .app-shell .sidebar {
+            width: 20%;
+            background-color: #8ca8d0;
+            padding: 10px;
+        }
+
+        .app-shell .sidebar-item {
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 8px;
+            border-radius: 2px;
+        }
+
+        .app-shell .content {
+            flex: 1;
+            background-color: var(--secondary-color);
+            padding: 10px;
+        }
+
+        .app-shell .content-item {
+            height: 15px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 8px;
+            border-radius: 2px;
+        }
+
+        /* Layout 9: Masonry */
+        .masonry {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            padding: 10px;
+            height: 100%;
+            grid-auto-rows: minmax(30px, auto);
+        }
+
+        .masonry .card {
+            background-color: var(--primary-color);
+            border-radius: 4px;
+            padding: 8px;
+        }
+
+        .masonry .card:nth-child(1) {
+            grid-row: span 2;
+        }
+
+        .masonry .card:nth-child(2) {
+            grid-row: span 1;
+        }
+
+        .masonry .card:nth-child(3) {
+            grid-row: span 3;
+        }
+
+        .masonry .card:nth-child(4) {
+            grid-row: span 2;
+        }
+
+        .masonry .card:nth-child(5) {
+            grid-row: span 1;
+        }
+
+        .masonry .card-content {
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+        }
+
+        /* Layout 10: Magazine */
+        .magazine {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 8px;
+            padding: 10px;
+            height: 100%;
+        }
+
+        .magazine .featured {
+            grid-column: span 2;
+            grid-row: span 2;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+            padding: 8px;
+        }
+
+        .magazine .article {
+            background-color: var(--secondary-color);
+            border-radius: 4px;
+            padding: 8px;
+        }
+
+        .magazine .article:nth-child(2) {
+            grid-column: span 2;
+        }
+
+        .magazine .article-content {
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+        }
+
+        /* Layout 11: Dashboard */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 8px;
+            padding: 10px;
+            height: 100%;
+        }
+
+        .dashboard .widget {
+            background-color: var(--primary-color);
+            border-radius: 4px;
+            padding: 8px;
+        }
+
+        .dashboard .widget:nth-child(1) {
+            grid-column: span 2;
+        }
+
+        .dashboard .widget-content {
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+        }
+
+        /* Layout 12: Tableau */
+        .table-layout {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 10px;
+        }
+
+        .table-layout .table-header {
+            display: flex;
+            height: 15px;
+            margin-bottom: 8px;
+        }
+
+        .table-layout .table-header .col {
+            flex: 1;
+            background-color: var(--primary-color);
+            margin-right: 5px;
+            border-radius: 2px;
+        }
+
+        .table-layout .table-row {
+            display: flex;
+            height: 12px;
+            margin-bottom: 5px;
+        }
+
+        .table-layout .table-row .col {
+            flex: 1;
+            background-color: var(--secondary-color);
+            margin-right: 5px;
+            border-radius: 2px;
+        }
+
+        /* Layout 13: Galerie */
+        .gallery-layout {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 8px;
+            padding: 10px;
+            height: 100%;
+        }
+
+        .gallery-layout .image {
+            background-color: var(--primary-color);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        /* Layout 14: Timeline */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 10px;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .timeline .event {
+            display: flex;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .timeline .event::before {
+            content: '';
+            position: absolute;
+            left: 20%;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            transform: translateX(-50%);
+        }
+
+        .timeline .event .date {
+            width: 20%;
+            padding-right: 10px;
+            text-align: right;
+            font-size: 0.7rem;
+        }
+
+        .timeline .event .content {
+            width: 80%;
+            padding-left: 10px;
+        }
+
+        .timeline .event .content .bar {
+            height: 10px;
+            background-color: var(--secondary-color);
+            border-radius: 2px;
+            margin-bottom: 3px;
+        }
+
+        /* Layout 15: Landing minimal */
+        .minimal-landing {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .minimal-landing .title {
+            height: 20px;
+            width: 80%;
+            background-color: var(--primary-color);
+            margin-bottom: 15px;
+            border-radius: 2px;
+        }
+
+        .minimal-landing .subtitle {
+            height: 12px;
+            width: 60%;
+            background-color: var(--secondary-color);
+            margin-bottom: 20px;
+            border-radius: 2px;
+        }
+
+        .minimal-landing .cta {
+            height: 30px;
+            width: 120px;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        /* Layout 16: Map-centric */
+        .map-layout {
+            display: flex;
+            height: 100%;
+        }
+
+        .map-layout .map {
+            flex: 1;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .map-layout .panel {
+            width: 30%;
+            background-color: var(--secondary-color);
+            padding: 10px;
+        }
+
+        .map-layout .panel-item {
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 8px;
+            border-radius: 2px;
+        }
+
+        /* Layout 17: Full-bleed */
+        .full-bleed {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .full-bleed .section {
+            flex: 1;
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .full-bleed .section:nth-child(odd) {
+            background-color: var(--primary-color);
+        }
+
+        .full-bleed .section:nth-child(even) {
+            background-color: var(--secondary-color);
+        }
+
+        /* Layout 18: Parallax */
+        .parallax {
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .parallax .layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .parallax .background {
+            background-color: var(--primary-color);
+            transform: translateZ(-1px) scale(1.5);
+        }
+
+        .parallax .foreground {
+            background-color: var(--secondary-color);
+            opacity: 0.8;
+            width: 80%;
+            height: 60%;
+        }
+
+        /* Layout 19: Asymétrique */
+        .asymmetric {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 8px;
+            padding: 10px;
+            height: 100%;
+        }
+
+        .asymmetric .main {
+            grid-row: span 2;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .asymmetric .side-top {
+            background-color: var(--secondary-color);
+            border-radius: 4px;
+        }
+
+        .asymmetric .side-bottom {
+            background-color: #8ca8d0;
+            border-radius: 4px;
+        }
+
+        /* Layout 20: Modal-centric */
+        .modal-layout {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            position: relative;
+        }
+
+        .modal-layout .background {
+            width: 100%;
+            height: 100%;
+            background-color: var(--secondary-color);
+        }
+
+        .modal-layout .modal {
+            position: absolute;
+            width: 70%;
+            height: 60%;
+            background-color: var(--primary-color);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+        }
+
+        .modal-layout .modal-header {
+            height: 15px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 10px;
+            border-radius: 2px;
+        }
+
+        .modal-layout .modal-content {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+        }
+
+        /* Layout 21: Accordion */
+        .accordion-layout {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 10px;
+        }
+
+        .accordion-layout .section {
+            margin-bottom: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .accordion-layout .section-header {
+            height: 15px;
+            background-color: var(--primary-color);
+            margin-bottom: 2px;
+            border-radius: 2px;
+        }
+
+        .accordion-layout .section-content {
+            height: 25px;
+            background-color: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        /* Layout 22: Search-first */
+        .search-layout {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 10px;
+        }
+
+        .search-layout .search-bar {
+            height: 25px;
+            background-color: var(--primary-color);
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .search-layout .results {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .search-layout .result-item {
+            height: 12px;
+            background-color: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        /* Layout 23: Multi-step */
+        .multi-step {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 10px;
+        }
+
+        .multi-step .progress {
+            height: 10px;
+            background-color: var(--primary-color);
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        .multi-step .step {
+            flex: 1;
+            background-color: var(--secondary-color);
+            margin-bottom: 8px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        /* Layout 24: Embedded */
+        .embedded-layout {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .embedded-layout .header {
+            height: 15%;
+            background-color: var(--primary-color);
+        }
+
+        .embedded-layout .content {
+            flex: 1;
+            display: flex;
+        }
+
+        .embedded-layout .sidebar {
+            width: 20%;
+            background-color: #8ca8d0;
+        }
+
+        .embedded-layout .embeds {
+            flex: 1;
+            background-color: var(--secondary-color);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 5px;
+            padding: 5px;
+        }
+
+        .embedded-layout .embed {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+
+        /* Layout 25: Hybride */
+        .hybrid-layout {
+            display: flex;
+            height: 100%;
+        }
+
+        .hybrid-layout .panel {
+            width: 20%;
+            background-color: var(--primary-color);
+            padding: 5px;
+        }
+
+        .hybrid-layout .panel-item {
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 5px;
+            border-radius: 2px;
+        }
+
+        .hybrid-layout .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hybrid-layout .main-header {
+            height: 15%;
+            background-color: var(--secondary-color);
+        }
+
+        .hybrid-layout .main-content {
+            flex: 1;
+            background-color: #8ca8d0;
+            display: flex;
+        }
+
+        .hybrid-layout .content-panel {
+            flex: 1;
+            padding: 5px;
+        }
+
+        .hybrid-layout .content-item {
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 5px;
+            border-radius: 2px;
+        }
+
+        /* Styles pour les aperçus dans les cartes */
+        .preview-mini {
+            transform: scale(0.7);
+            transform-origin: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+            }
+
+            .search-container {
+                min-width: 100%;
+            }
+
+            .layouts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-content {
+                padding: 20px;
+            }
+        }
+
+        /* Layout 26: Glassmorphism */
+        .glassmorphism {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .glassmorphism .card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+        }
+
+        .glassmorphism .card-header {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin-bottom: 6px;
+        }
+
+        .glassmorphism .card-content {
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        /* Layout 27: Neumorphism */
+        .neumorphism {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 15px;
+            background: var(--background-color);
+        }
+
+        .neumorphism .element {
+            background: var(--background-color);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.1), -8px -8px 16px rgba(255, 255, 255, 0.7);
+            padding: 10px;
+        }
+
+        .neumorphism .element-content {
+            height: 15px;
+            background: var(--secondary-color);
+            border-radius: 6px;
+            opacity: 0.3;
+        }
+
+        /* Layout 28: Brutalism */
+        .brutalism {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 10px;
+            background: white;
+            border: 3px solid black;
+        }
+
+        .brutalism .header {
+            height: 25px;
+            background: black;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            margin-bottom: 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .brutalism .content-block {
+            height: 15px;
+            background: var(--primary-color);
+            margin-bottom: 8px;
+            border: 2px solid black;
+        }
+
+        .brutalism .highlight {
+            background: yellow;
+            border: 2px solid black;
+        }
+
+        /* Layout 29: Isometric */
+        .isometric {
+            display: flex;
+            height: 100%;
+            align-items: flex-end;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        .isometric .cube {
+            width: 40px;
+            height: 40px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(60deg) rotateY(0deg) rotateZ(-45deg);
+        }
+
+        .isometric .face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-color);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .isometric .front {
+            transform: translateZ(20px);
+        }
+
+        .isometric .back {
+            transform: translateZ(-20px);
+        }
+
+        .isometric .right {
+            transform: rotateY(90deg) translateZ(20px);
+        }
+
+        .isometric .left {
+            transform: rotateY(-90deg) translateZ(20px);
+        }
+
+        .isometric .top {
+            transform: rotateX(90deg) translateZ(20px);
+        }
+
+        .isometric .bottom {
+            transform: rotateX(-90deg) translateZ(20px);
+        }
+
+        /* Layout 30: Cyberpunk */
+        .cyberpunk {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background: #0a0a12;
+            padding: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cyberpunk::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 49%, #00ffff 50%, transparent 51%);
+            background-size: 10px 10px;
+            opacity: 0.1;
+        }
+
+        .cyberpunk .neon {
+            height: 20px;
+            background: #ff00ff;
+            margin-bottom: 8px;
+            box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cyberpunk .grid {
+            flex: 1;
+            background: linear-gradient(90deg, transparent 49%, #00ffff 50%, transparent 51%),
+                linear-gradient(0deg, transparent 49%, #00ffff 50%, transparent 51%);
+            background-size: 20px 20px;
+            opacity: 0.2;
+        }
+
+        /* Layout 31: Adaptive UI */
+        .adaptive-ui {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 10px;
+        }
+
+        .adaptive-ui .context-bar {
+            height: 15px;
+            background: var(--primary-color);
+            margin-bottom: 8px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .adaptive-ui .content-area {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 8px;
+        }
+
+        .adaptive-ui .module {
+            background: var(--secondary-color);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            text-align: center;
+            padding: 5px;
+        }
+
+        /* Layout 32: Voice UI */
+        .voice-ui {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .voice-ui .mic {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .voice-ui .mic::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 2px;
+        }
+
+        .voice-ui .waves {
+            display: flex;
+            gap: 5px;
+        }
+
+        .voice-ui .wave {
+            width: 8px;
+            height: 20px;
+            background: var(--secondary-color);
+            border-radius: 4px;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        .voice-ui .wave:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .voice-ui .wave:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .voice-ui .wave:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scaleY(1);
+            }
+
+            50% {
+                transform: scaleY(2);
+            }
+        }
+
+        /* Layout 33: AR/VR Ready */
+        .ar-vr {
+            display: flex;
+            height: 100%;
+            perspective: 1000px;
+        }
+
+        .ar-vr .viewport {
+            flex: 1;
+            background: var(--primary-color);
+            margin: 10px;
+            border-radius: 8px;
+            transform-style: preserve-3d;
+            transform: rotateY(15deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .ar-vr .hud {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .ar-vr .hud-item {
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        /* Layout 34: Data Visualization */
+        .data-viz {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 10px;
+        }
+
+        .data-viz .chart-area {
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            padding: 10px;
+        }
+
+        .data-viz .bar {
+            flex: 1;
+            background: var(--primary-color);
+            border-radius: 4px 4px 0 0;
+            min-height: 10px;
+        }
+
+        .data-viz .bar:nth-child(1) {
+            height: 70%;
+        }
+
+        .data-viz .bar:nth-child(2) {
+            height: 40%;
+        }
+
+        .data-viz .bar:nth-child(3) {
+            height: 90%;
+        }
+
+        .data-viz .bar:nth-child(4) {
+            height: 30%;
+        }
+
+        .data-viz .bar:nth-child(5) {
+            height: 60%;
+        }
+
+        .data-viz .legend {
+            height: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .data-viz .legend-item {
+            width: 20px;
+            height: 8px;
+            background: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        /* Layout 35: Micro-interaction Heavy */
+        .micro-interactions {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 15px;
+            gap: 10px;
+        }
+
+        .micro-interactions .interactive {
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .micro-interactions .interactive::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        .micro-interactions .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Layout 36: AI Assistant */
+        .ai-assistant {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 10px;
+        }
+
+        .ai-assistant .chat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .ai-assistant .message {
+            padding: 8px;
+            border-radius: 12px;
+            max-width: 80%;
+            font-size: 0.7rem;
+        }
+
+        .ai-assistant .user {
+            align-self: flex-end;
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .ai-assistant .ai {
+            align-self: flex-start;
+            background: var(--secondary-color);
+        }
+
+        .ai-assistant .typing {
+            display: flex;
+            gap: 3px;
+            padding: 8px;
+        }
+
+        .ai-assistant .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .ai-assistant .dot:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .ai-assistant .dot:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes typing {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+            }
+
+            40% {
+                transform: scale(1);
+            }
+        }
+
+        /* Layout 37: Spatial Computing */
+        .spatial {
+            display: flex;
+            height: 100%;
+            perspective: 800px;
+            transform-style: preserve-3d;
+        }
+
+        .spatial .object {
+            flex: 1;
+            margin: 15px;
+            background: var(--primary-color);
+            border-radius: 8px;
+            transform: rotateX(15deg) rotateY(15deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+        }
+
+        .spatial .object::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: var(--secondary-color);
+            border-radius: 10px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        /* Layout 38: Quantum UI */
+        .quantum {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 10px;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%);
+        }
+
+        .quantum .qubit {
+            width: 30px;
+            height: 30px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            margin: 5px;
+            position: relative;
+            animation: quantum 3s infinite linear;
+        }
+
+        .quantum .state {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--secondary-color);
+            border-radius: 50%;
+            opacity: 0;
+            animation: state 3s infinite ease-in-out;
+        }
+
+        @keyframes quantum {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            25% {
+                transform: translate(50px, 30px);
+            }
+
+            50% {
+                transform: translate(20px, 60px);
+            }
+
+            75% {
+                transform: translate(60px, 20px);
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        @keyframes state {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.5);
+                opacity: 0.5;
+            }
+        }
+
+        /* Layout 39: Biometric */
+        .biometric {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .biometric .scanner {
+            width: 80px;
+            height: 80px;
+            border: 3px solid var(--primary-color);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .biometric .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--secondary-color);
+            animation: scan 2s infinite linear;
+        }
+
+        @keyframes scan {
+            0% {
+                top: 0;
+            }
+
+            100% {
+                top: 100%;
+            }
+        }
+
+        .biometric .metrics {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .biometric .metric {
+            width: 20px;
+            height: 8px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        /* Layout 40: Holographic */
+        .holographic {
+            display: flex;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .holographic .hologram {
+            width: 60%;
+            height: 60%;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 8px;
+            position: relative;
+            opacity: 0.8;
+        }
+
+        .holographic .hologram::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: inherit;
+            filter: blur(10px);
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        .holographic .glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 30%, var(--primary-color) 100%);
+            opacity: 0.3;
+        }
+
+        /* Media queries pour responsive */
+        @media (max-width: 1024px) {
+            .controls {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .search-container {
+                justify-self: stretch;
+            }
+
+            .pagination {
+                justify-self: center;
+            }
+
+            .palette-selector {
+                justify-self: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+
+            .page-info {
+                padding: 5px 10px;
+                font-size: 0.8rem;
+            }
+
+            .palette-btn {
+                width: 25px;
+                height: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body class="palette-1">
+    <div class="container">
+        <header>
+            <h1>Galerie de Layouts Web</h1>
+        </header>
+
+        <div class="controls">
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Rechercher un layout...">
+            </div>
+            <div class="pagination">
+                <button class="page-btn" id="prev-page">← Précédent</button>
+                <span class="page-info" id="page-info">Page 1 / 7</span>
+                <button class="page-btn" id="next-page">Suivant →</button>
+            </div>
+            <div class="palette-selector">
+                <div class="palette-btn active" data-palette="palette-1"></div>
+                <div class="palette-btn" data-palette="palette-2"></div>
+                <div class="palette-btn" data-palette="palette-3"></div>
+                <div class="palette-btn" data-palette="palette-4"></div>
+            </div>
+        </div>
+
+        <div class="layouts-grid" id="layouts-container">
+            <!-- Tous les layouts seront générés ici -->
+        </div>
+    </div>
+
+    <div class="layout-detail" id="layout-detail">
+        <div class="detail-content">
+            <button class="close-btn" id="close-detail">&times;</button>
+            <div id="detail-content">
+                <!-- Le contenu détaillé sera inséré ici -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Classe Layout pour gérer les données et l'affichage
+        class Layout {
+            constructor(id, name, description, usage, technique, advantage, disadvantage, tags = []) {
+                this.id = id;
+                this.name = name;
+                this.description = description;
+                this.usage = usage;
+                this.technique = technique;
+                this.advantage = advantage;
+                this.disadvantage = disadvantage;
+                this.tags = tags;
+            }
+
+            // Génère la carte pour la grille
+            generateCard() {
+                return `
+                    <div class="layout-card" data-id="${this.id}">
+                        <div class="layout-preview">
+                            <span class="layout-id">#${this.id}</span>
+                            <div class="preview-mini">
+                                ${this.generateVisualPreview()}
+                            </div>
+                        </div>
+                        <div class="layout-info">
+                            <h3 class="layout-name">${this.name}</h3>
+                            <p class="layout-description">${this.description}</p>
+                            <div class="layout-tags">
+                                ${this.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Génère la vue détaillée
+            generateDetailView() {
+                return `
+                    <div class="detail-header">
+                        <h2 class="detail-title">${this.name}</h2>
+                        <p class="detail-description">${this.description}</p>
+                        <div class="detail-tags">
+                            ${this.tags.map(tag => `<span class="detail-tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="visual-preview">
+                        ${this.generateVisualPreview()}
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>Usage</h3>
+                        <p>${this.usage}</p>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>Technique</h3>
+                        <p>${this.technique}</p>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>Avantage</h3>
+                        <p>${this.advantage}</p>
+                    </div>
+
+                    <div class="detail-section">
+                        <h3>Inconvénient</h3>
+                        <p>${this.disadvantage}</p>
+                    </div>
+                `;
+            }
+
+            // Génère l'aperçu visuel du layout
+            generateVisualPreview() {
+                switch (this.id) {
+                    case 1:
+                        return `
+                            <div class="preview-container single-column">
+                                <div class="header"></div>
+                                <div class="content"></div>
+                                <div class="media"></div>
+                            </div>
+                        `;
+                    case 2:
+                        return `
+                            <div class="preview-container sidebar-layout">
+                                <div class="sidebar">
+                                    <div class="sidebar-item"></div>
+                                    <div class="sidebar-item"></div>
+                                    <div class="sidebar-item"></div>
+                                </div>
+                                <div class="main-content">
+                                    <div class="content-block"></div>
+                                    <div class="content-block"></div>
+                                    <div class="content-block"></div>
+                                </div>
+                            </div>
+                        `;
+                    case 3:
+                        return `
+                            <div class="preview-container three-columns">
+                                <div class="left">
+                                    <div class="menu-item"></div>
+                                    <div class="menu-item"></div>
+                                    <div class="menu-item"></div>
+                                </div>
+                                <div class="center">
+                                    <div class="content-item"></div>
+                                    <div class="content-item"></div>
+                                    <div class="content-item"></div>
+                                </div>
+                                <div class="right">
+                                    <div class="tool-item"></div>
+                                    <div class="tool-item"></div>
+                                </div>
+                            </div>
+                        `;
+                    case 4:
+                        return `
+                            <div class="preview-container card-grid">
+                                <div class="card">
+                                    <div class="card-header"></div>
+                                    <div class="card-content"></div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header"></div>
+                                    <div class="card-content"></div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header"></div>
+                                    <div class="card-content"></div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header"></div>
+                                    <div class="card-content"></div>
+                                </div>
+                            </div>
+                        `;
+                    case 5:
+                        return `
+                            <div class="preview-container hero-layout">
+                                <div class="hero">HERO</div>
+                                <div class="sections">
+                                    <div class="section"></div>
+                                    <div class="section"></div>
+                                    <div class="section"></div>
+                                </div>
+                            </div>
+                        `;
+                    case 6:
+                        return `
+                            <div class="preview-container split-screen">
+                                <div class="left-panel">TEXTE</div>
+                                <div class="right-panel">IMAGE</div>
+                            </div>
+                        `;
+                    case 7:
+                        return `
+                            <div class="preview-container off-canvas">
+                                <div class="menu-toggle"></div>
+                                <div class="main">CONTENU</div>
+                                <div class="drawer">
+                                    <div class="drawer-item"></div>
+                                    <div class="drawer-item"></div>
+                                    <div class="drawer-item"></div>
+                                </div>
+                            </div>
+                        `;
+                    case 8:
+                        return `
+                            <div class="preview-container app-shell">
+                                <div class="header">
+                                    <div class="logo"></div>
+                                </div>
+                                <div class="main-area">
+                                    <div class="sidebar">
+                                        <div class="sidebar-item"></div>
+                                        <div class="sidebar-item"></div>
+                                        <div class="sidebar-item"></div>
+                                    </div>
+                                    <div class="content">
+                                        <div class="content-item"></div>
+                                        <div class="content-item"></div>
+                                        <div class="content-item"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    case 9:
+                        return `
+                            <div class="preview-container masonry">
+                                <div class="card"><div class="card-content"></div></div>
+                                <div class="card"><div class="card-content"></div></div>
+                                <div class="card"><div class="card-content"></div></div>
+                                <div class="card"><div class="card-content"></div></div>
+                                <div class="card"><div class="card-content"></div></div>
+                            </div>
+                        `;
+                    case 10:
+                        return `
+                            <div class="preview-container magazine">
+                                <div class="featured"><div class="article-content"></div></div>
+                                <div class="article"><div class="article-content"></div></div>
+                                <div class="article"><div class="article-content"></div></div>
+                                <div class="article"><div class="article-content"></div></div>
+                                <div class="article"><div class="article-content"></div></div>
+                            </div>
+                        `;
+                    case 11:
+                        return `
+                            <div class="preview-container dashboard">
+                                <div class="widget"><div class="widget-content"></div></div>
+                                <div class="widget"><div class="widget-content"></div></div>
+                                <div class="widget"><div class="widget-content"></div></div>
+                                <div class="widget"><div class="widget-content"></div></div>
+                            </div>
+                        `;
+                    case 12:
+                        return `
+                            <div class="preview-container table-layout">
+                                <div class="table-header">
+                                    <div class="col"></div>
+                                    <div class="col"></div>
+                                    <div class="col"></div>
+                                </div>
+                                <div class="table-row">
+                                    <div class="col"></div>
+                                    <div class="col"></div>
+                                    <div class="col"></div>
+                                </div>
+                                <div class="table-row">
+                                    <div class="col"></div>
+                                    <div class="col"></div>
+                                    <div class="col"></div>
+                                </div>
+                                <div class="table-row">
+                                    <div class="col"></div>
+                                    <div class="col"></div>
+                                    <div class="col"></div>
+                                </div>
+                            </div>
+                        `;
+                    case 13:
+                        return `
+                            <div class="preview-container gallery-layout">
+                                <div class="image">IMG</div>
+                                <div class="image">IMG</div>
+                                <div class="image">IMG</div>
+                                <div class="image">IMG</div>
+                                <div class="image">IMG</div>
+                                <div class="image">IMG</div>
+                            </div>
+                        `;
+                    case 14:
+                        return `
+                            <div class="preview-container timeline">
+                                <div class="event">
+                                    <div class="date">2023</div>
+                                    <div class="content">
+                                        <div class="bar"></div>
+                                        <div class="bar" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                <div class="event">
+                                    <div class="date">2022</div>
+                                    <div class="content">
+                                        <div class="bar"></div>
+                                        <div class="bar" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                                <div class="event">
+                                    <div class="date">2021</div>
+                                    <div class="content">
+                                        <div class="bar"></div>
+                                        <div class="bar" style="width: 70%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    case 15:
+                        return `
+                            <div class="preview-container minimal-landing">
+                                <div class="title"></div>
+                                <div class="subtitle"></div>
+                                <div class="cta"></div>
+                            </div>
+                        `;
+                    case 16:
+                        return `
+                            <div class="preview-container map-layout">
+                                <div class="map">CARTE</div>
+                                <div class="panel">
+                                    <div class="panel-item"></div>
+                                    <div class="panel-item"></div>
+                                    <div class="panel-item"></div>
+                                </div>
+                            </div>
+                        `;
+                    case 17:
+                        return `
+                            <div class="preview-container full-bleed">
+                                <div class="section">SECTION 1</div>
+                                <div class="section">SECTION 2</div>
+                                <div class="section">SECTION 3</div>
+                            </div>
+                        `;
+                    case 18:
+                        return `
+                            <div class="preview-container parallax">
+                                <div class="layer background">ARRIÈRE-PLAN</div>
+                                <div class="layer foreground">PREMIER PLAN</div>
+                            </div>
+                        `;
+                    case 19:
+                        return `
+                            <div class="preview-container asymmetric">
+                                <div class="main"></div>
+                                <div class="side-top"></div>
+                                <div class="side-bottom"></div>
+                            </div>
+                        `;
+                    case 20:
+                        return `
+                            <div class="preview-container modal-layout">
+                                <div class="background"></div>
+                                <div class="modal">
+                                    <div class="modal-header"></div>
+                                    <div class="modal-content"></div>
+                                </div>
+                            </div>
+                        `;
+                    case 21:
+                        return `
+                            <div class="preview-container accordion-layout">
+                                <div class="section">
+                                    <div class="section-header"></div>
+                                    <div class="section-content"></div>
+                                </div>
+                                <div class="section">
+                                    <div class="section-header"></div>
+                                    <div class="section-content"></div>
+                                </div>
+                                <div class="section">
+                                    <div class="section-header"></div>
+                                    <div class="section-content"></div>
+                                </div>
+                            </div>
+                        `;
+                    case 22:
+                        return `
+                            <div class="preview-container search-layout">
+                                <div class="search-bar"></div>
+                                <div class="results">
+                                    <div class="result-item"></div>
+                                    <div class="result-item"></div>
+                                    <div class="result-item"></div>
+                                    <div class="result-item"></div>
+                                </div>
+                            </div>
+                        `;
+                    case 23:
+                        return `
+                            <div class="preview-container multi-step">
+                                <div class="progress"></div>
+                                <div class="step">ÉTAPE 1</div>
+                                <div class="step">ÉTAPE 2</div>
+                                <div class="step">ÉTAPE 3</div>
+                            </div>
+                        `;
+                    case 24:
+                        return `
+                            <div class="preview-container embedded-layout">
+                                <div class="header"></div>
+                                <div class="content">
+                                    <div class="sidebar"></div>
+                                    <div class="embeds">
+                                        <div class="embed">EMBED 1</div>
+                                        <div class="embed">EMBED 2</div>
+                                        <div class="embed">EMBED 3</div>
+                                        <div class="embed">EMBED 4</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    case 25:
+                        return `
+                            <div class="preview-container hybrid-layout">
+                                <div class="panel">
+                                    <div class="panel-item"></div>
+                                    <div class="panel-item"></div>
+                                    <div class="panel-item"></div>
+                                </div>
+                                <div class="main">
+                                    <div class="main-header"></div>
+                                    <div class="main-content">
+                                        <div class="content-panel">
+                                            <div class="content-item"></div>
+                                            <div class="content-item"></div>
+                                            <div class="content-item"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    case 26:
+                        return `
+                            <div class="preview-container glassmorphism">
+                                <div class="card">
+                                    <div class="card-header"></div>
+                                    <div class="card-content"></div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header"></div>
+                                    <div class="card-content"></div>
+                                </div>
+                            </div>
+                        `;
+                    case 27:
+                        return `
+                            <div class="preview-container neumorphism">
+                                <div class="element">
+                                    <div class="element-content"></div>
+                                </div>
+                                <div class="element">
+                                    <div class="element-content"></div>
+                                </div>
+                                <div class="element">
+                                    <div class="element-content"></div>
+                                </div>
+                            </div>
+                        `;
+                    case 28:
+                        return `
+                            <div class="preview-container brutalism">
+                                <div class="header">HEADER</div>
+                                <div class="content-block"></div>
+                                <div class="content-block highlight"></div>
+                                <div class="content-block"></div>
+                            </div>
+                        `;
+                    case 29:
+                        return `
+                            <div class="preview-container isometric">
+                                <div class="cube">
+                                    <div class="face front"></div>
+                                    <div class="face back"></div>
+                                    <div class="face right"></div>
+                                    <div class="face left"></div>
+                                    <div class="face top"></div>
+                                    <div class="face bottom"></div>
+                                </div>
+                            </div>
+                        `;
+                    case 30:
+                        return `
+                            <div class="preview-container cyberpunk">
+                                <div class="neon"></div>
+                                <div class="neon"></div>
+                                <div class="grid"></div>
+                            </div>
+                        `;
+                    case 31:
+                        return `
+                            <div class="preview-container adaptive-ui">
+                                <div class="context-bar"></div>
+                                <div class="content-area">
+                                    <div class="module">A</div>
+                                    <div class="module">B</div>
+                                    <div class="module">C</div>
+                                    <div class="module">D</div>
+                                </div>
+                            </div>
+                        `;
+                    case 32:
+                        return `
+                            <div class="preview-container voice-ui">
+                                <div class="mic"></div>
+                                <div class="waves">
+                                    <div class="wave"></div>
+                                    <div class="wave"></div>
+                                    <div class="wave"></div>
+                                    <div class="wave"></div>
+                                </div>
+                            </div>
+                        `;
+                    case 33:
+                        return `
+                            <div class="preview-container ar-vr">
+                                <div class="viewport">3D VIEW</div>
+                                <div class="hud">
+                                    <div class="hud-item"></div>
+                                    <div class="hud-item"></div>
+                                </div>
+                            </div>
+                        `;
+                    case 34:
+                        return `
+                            <div class="preview-container data-viz">
+                                <div class="chart-area">
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                </div>
+                                <div class="legend">
+                                    <div class="legend-item"></div>
+                                    <div class="legend-item"></div>
+                                    <div class="legend-item"></div>
+                                </div>
+                            </div>
+                        `;
+                    case 35:
+                        return `
+                            <div class="preview-container micro-interactions">
+                                <div class="interactive"></div>
+                                <div class="interactive pulse"></div>
+                                <div class="interactive"></div>
+                            </div>
+                        `;
+                    case 36:
+                        return `
+                            <div class="preview-container ai-assistant">
+                                <div class="chat">
+                                    <div class="message user">Bonjour</div>
+                                    <div class="message ai">Comment puis-je vous aider?</div>
+                                    <div class="typing">
+                                        <div class="dot"></div>
+                                        <div class="dot"></div>
+                                        <div class="dot"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    case 37:
+                        return `
+                            <div class="preview-container spatial">
+                                <div class="object">3D</div>
+                            </div>
+                        `;
+                    case 38:
+                        return `
+                            <div class="preview-container quantum">
+                                <div class="qubit">
+                                    <div class="state"></div>
+                                </div>
+                            </div>
+                        `;
+                    case 39:
+                        return `
+                            <div class="preview-container biometric">
+                                <div class="scanner">
+                                    <div class="scan-line"></div>
+                                </div>
+                                <div class="metrics">
+                                    <div class="metric"></div>
+                                    <div class="metric"></div>
+                                    <div class="metric"></div>
+                                </div>
+                            </div>
+                        `;
+                    case 40:
+                        return `
+                            <div class="preview-container holographic">
+                                <div class="hologram"></div>
+                                <div class="glow"></div>
+                            </div>
+                        `;
+                    default:
+                        return `<div style="display: flex; align-items: center; justify-content: center; height: 100%;">Aperçu du layout ${this.id}</div>`;
+                }
+            }
+        }
+
+        const extendedLayoutsData = [{
+                id: 1,
+                name: "Colonne unique",
+                description: "Un seul flux vertical de contenu (titre → texte → médias).",
+                usage: "Articles de blog, pages de documentation, pages marketing mobiles-first.",
+                technique: "max-width centré, padding, flow normal. Très simple à rendre accessible.",
+                advantage: "Lisibilité optimale sur mobile.",
+                disadvantage: "Peu d'options latérales pour navigation/CTA.",
+                tags: ["Simple", "Mobile-first", "Accessible"]
+            },
+            {
+                id: 2,
+                name: "Sidebar fixe",
+                description: "Contenu principal + barre latérale (navigation, filtres, widgets).",
+                usage: "Dashboards, panels d'administration, sites e-commerce avec filtres.",
+                technique: "CSS Grid / Flexbox ou position: sticky pour sidebar. Cacher ou basculer en off-canvas sur mobile.",
+                advantage: "Navigation facile et accès rapide aux fonctionnalités.",
+                disadvantage: "Peut réduire l'espace de contenu principal sur petits écrans.",
+                tags: ["Navigation", "Dashboard", "Responsive"]
+            },
+            {
+                id: 3,
+                name: "Trois colonnes",
+                description: "Menu / contenu principal / outils secondaires.",
+                usage: "IDE web, panneaux d'édition, portails d'info complexes.",
+                technique: "CSS Grid à 3 colonnes. Réduire à 1 ou 2 colonnes selon breakpoint.",
+                advantage: "Beaucoup d'information accessible simultanément.",
+                disadvantage: "Complexe à gérer sur petits écrans.",
+                tags: ["Complexe", "Productivité", "Multi-panneaux"]
+            },
+            {
+                id: 4,
+                name: "Layout en grille de cartes",
+                description: "Série de cartes (produits, posts, ressources) organisées en grille.",
+                usage: "Catalogue, galerie, blog index.",
+                technique: "grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) pour responsive; gap pour espacement.",
+                advantage: "Présentation visuelle attractive et organisée.",
+                disadvantage: "Peut nécessiter beaucoup d'espace vertical.",
+                tags: ["Visuel", "Catalogue", "Responsive"]
+            },
+            {
+                id: 5,
+                name: "Hero + contenu",
+                description: "Grand bandeau d'ouverture (image/CTA) suivi de sections modulaires.",
+                usage: "Landing pages, pages produit.",
+                technique: "vh pour hero; sections en container avec max-width.",
+                advantage: "Impact visuel fort et parcours utilisateur guidé.",
+                disadvantage: "Peut augmenter le temps de chargement.",
+                tags: ["Marketing", "Conversion", "Visuel"]
+            },
+            {
+                id: 6,
+                name: "Split-screen",
+                description: "Page scindée en deux verticalement (texte vs image / deux produits).",
+                usage: "Présentation produit comparatif, page d'accueil créative.",
+                technique: "Flexbox ou Grid 2 colonnes, prévoir collapse en stack sur mobile.",
+                advantage: "Comparaison directe et design moderne.",
+                disadvantage: "Peut être difficile à équilibrer visuellement.",
+                tags: ["Moderne", "Comparaison", "Créatif"]
+            },
+            {
+                id: 7,
+                name: "Off-canvas navigation",
+                description: "Menu caché qui glisse depuis un côté (mobile ou desktop).",
+                usage: "Navigation mobile, webapps où l'espace doit rester libre.",
+                technique: "Transform + transition ou position: fixed; accessibilité : focus trap, aria attributes.",
+                advantage: "Économie d'espace et expérience utilisateur moderne.",
+                disadvantage: "Navigation moins visible (peut réduire la découvrabilité).",
+                tags: ["Mobile", "Espace", "Moderne"]
+            },
+            {
+                id: 8,
+                name: "Layout « App shell »",
+                description: "En-tête + barre latérale + zone de contenu dynamique (route-based).",
+                usage: "Applications web (mail, CRM, IDE).",
+                technique: "Shell chargé une fois ; contenu injecté via router/JS. Cache service worker possible.",
+                advantage: "Performance et expérience utilisateur fluide.",
+                disadvantage: "Complexité de développement accrue.",
+                tags: ["SPA", "Performance", "Application"]
+            },
+            {
+                id: 9,
+                name: "Cards + Masonry",
+                description: "Cartes de hauteurs variables organisées en colonnes.",
+                usage: "Galleries d'images, portfolios.",
+                technique: "Masonry JS ou grid-auto-rows + grid-row: span n calculé ; CSS Columns pour alternative.",
+                advantage: "Utilisation optimale de l'espace et design dynamique.",
+                disadvantage: "Peut être difficile à rendre accessible.",
+                tags: ["Gallerie", "Dynamique", "Visuel"]
+            },
+            {
+                id: 10,
+                name: "Magazine / Newspaper",
+                description: "Grille asymétrique, articles de différentes tailles, éléments mis en avant.",
+                usage: "Sites média, magazines en ligne.",
+                technique: "CSS Grid avec zones nommées (grid-template-areas) pour contrôler mise en page.",
+                advantage: "Hiérarchie visuelle claire et design éditorial riche.",
+                disadvantage: "Complexité de mise en œuvre et maintenance.",
+                tags: ["Éditorial", "Hiérarchie", "Complexe"]
+            },
+            {
+                id: 11,
+                name: "Dashboard",
+                description: "Grille modulaire de widgets (statistiques, graphiques).",
+                usage: "Interfaces d'administration, analytics.",
+                technique: "CSS Grid + librairie ddraggable/resizable (interactions), gestion des breakpoints.",
+                advantage: "Personnalisation et vue d'ensemble des données.",
+                disadvantage: "Peut devenir désordonné si mal organisé.",
+                tags: ["Données", "Modulaire", "Personnalisable"]
+            },
+            {
+                id: 12,
+                name: "Tableau / liste détaillée",
+                description: "Tableaux riches, avec en-ligne actions, colonnes triables.",
+                usage: "Back-office, CRM, listes d'utilisateurs.",
+                technique: "<table> pour données tabulaires ; responsive : collapse to cards; ARIA pour tri.",
+                advantage: "Présentation structurée de données complexes.",
+                disadvantage: "Peut être difficile à rendre responsive.",
+                tags: ["Données", "Tableau", "Structured"]
+            },
+            {
+                id: 13,
+                name: "Galerie / Lightbox-centric",
+                description: "Grille d'images + ouverture en lightbox/visu plein écran.",
+                usage: "Photographies, portfolios.",
+                technique: "Grid + lightbox accessible (focus trap, navigation clavier).",
+                advantage: "Expérience immersive pour le contenu visuel.",
+                disadvantage: "Peut être lourd en termes de performance.",
+                tags: ["Visuel", "Immersion", "Gallerie"]
+            },
+            {
+                id: 14,
+                name: "Timeline / Fil d'événements",
+                description: "Liste ordonnée chronologiquement (verticale ou horizontale).",
+                usage: "Historique, roadmap, journaux.",
+                technique: "Flexbox vertical + marqueurs, ou horizontal scroll pour timeline longue.",
+                advantage: "Représentation claire de la chronologie.",
+                disadvantage: "Peut prendre beaucoup d'espace vertical.",
+                tags: ["Chronologie", "Historique", "Narrative"]
+            },
+            {
+                id: 15,
+                name: "Landing minimal / centered CTA",
+                description: "Centre unique d'attention avec CTA, peu de navigation.",
+                usage: "Pages de conversion, annonces.",
+                technique: "Flexbox centré verticalement (min-height:100vh), contraste fort, micro-interactions.",
+                advantage: "Focus total sur l'action principale.",
+                disadvantage: "Peut manquer de contexte ou d'information supplémentaire.",
+                tags: ["Conversion", "Minimal", "Focus"]
+            },
+            {
+                id: 16,
+                name: "Map-centric",
+                description: "Grande carte avec panneau(s) d'information/clustering.",
+                usage: "Services géolocalisés, immobilier, planificateur d'itinéraire.",
+                technique: "Map (Leaflet/Mapbox) en background ou iframe ; sidebar pour détails. Attention au lazy load.",
+                advantage: "Visualisation géographique intuitive.",
+                disadvantage: "Performance peut être affectée avec des cartes complexes.",
+                tags: ["Géolocalisation", "Carte", "Interactif"]
+            },
+            {
+                id: 17,
+                name: "Full-bleed sections",
+                description: "Sections alternées qui s'étendent sur toute la largeur (images, couleurs).",
+                usage: "Sites modernes, storytelling, portfolio.",
+                technique: "Containers internes pour limiter le texte, background plein width.",
+                advantage: "Design moderne et impact visuel fort.",
+                disadvantage: "Peut être difficile à équilibrer sur tous les écrans.",
+                tags: ["Moderne", "Visuel", "Storytelling"]
+            },
+            {
+                id: 18,
+                name: "Parallax / Scrollytelling",
+                description: "Effets de parallaxe ou sections animées lors du scroll.",
+                usage: "Récits immersifs, sites de marque.",
+                technique: "CSS background-attachment (limité) ou JS Scroll-based (IntersectionObserver / requestAnimationFrame). Attention perf & accessibilité.",
+                advantage: "Expérience utilisateur immersive et engageante.",
+                disadvantage: "Problèmes potentiels de performance et accessibilité.",
+                tags: ["Animation", "Immersion", "Engagement"]
+            },
+            {
+                id: 19,
+                name: "Asymétrique / Broken grid",
+                description: "Layout volontairement non symétrique pour impact visuel.",
+                usage: "Créatifs, landing expérimental.",
+                technique: "CSS Grid et positionnement absolu ; penser au flow pour mobile.",
+                advantage: "Design unique et mémorable.",
+                disadvantage: "Peut nuire à la lisibilité et à l'expérience utilisateur.",
+                tags: ["Créatif", "Expérimental", "Unique"]
+            },
+            {
+                id: 20,
+                name: "Modal-centric / single action flow",
+                description: "Page simple qui déclenche des workflows en modales (ex : formulaire pas à pas).",
+                usage: "Checkout rapide, onboarding.",
+                technique: "Focus management, fallback keyboard navigation, accessible forms.",
+                advantage: "Processus guidé et focalisé.",
+                disadvantage: "Peut interrompre le flux de navigation principal.",
+                tags: ["Workflow", "Formulaire", "Guidé"]
+            },
+            {
+                id: 21,
+                name: "Progressive Reveal / Accordion-heavy",
+                description: "Contenu empaqueté en accordéons / sections rétractables.",
+                usage: "FAQ, docs compressées, panneaux de configuration.",
+                technique: "<details> natif ou JS ; conserver aria-expanded.",
+                advantage: "Économie d'espace et organisation hiérarchique.",
+                disadvantage: "Contenu moins visible (nécessite des interactions).",
+                tags: ["Organisation", "Espace", "Hiérarchique"]
+            },
+            {
+                id: 22,
+                name: "Search-first layout",
+                description: "Barre de recherche proéminente avec résultats dynamiques.",
+                usage: "Marketplaces, docs, knowledge base.",
+                technique: "Input-centric, debounce, suggestions accessible via aria-activedescendant.",
+                advantage: "Accès rapide au contenu recherché.",
+                disadvantage: "Peut négliger la navigation traditionnelle.",
+                tags: ["Recherche", "Rapidité", "Focalisé"]
+            },
+            {
+                id: 23,
+                name: "Multi-step flow / Wizard",
+                description: "Formulaire séquencé par étapes avec progression.",
+                usage: "Inscription complexe, configuration produit.",
+                technique: "Routerless state machine, sauvegarde d'état, gestion d'erreurs et validations.",
+                advantage: "Réduction de la complexité perçue.",
+                disadvantage: "Peut allonger le processus de complétion.",
+                tags: ["Formulaire", "Étapes", "Progression"]
+            },
+            {
+                id: 24,
+                name: "Embedded content-centric",
+                description: "Page construite autour de contenus tiers (vidéos, iframes, widgets).",
+                usage: "Portfolios avec embeds, agrégateurs.",
+                technique: "Lazy loading, sizes containers, sandboxing pour sécurité.",
+                advantage: "Intégration de contenus externes sans friction.",
+                disadvantage: "Dépendance à des services tiers et problèmes de performance potentiels.",
+                tags: ["Intégration", "Tiers", "Multimédia"]
+            },
+            {
+                id: 25,
+                name: "Hybrid desktop/immersive",
+                description: "Combinaison d'éléments de bureau traditionnels et d'expériences immersives.",
+                usage: "Applications web complexes, outils créatifs.",
+                technique: "Combinaison de plusieurs techniques selon les zones de l'interface.",
+                advantage: "Flexibilité et adaptation à différents types de contenu.",
+                disadvantage: "Risque de manque de cohérence visuelle.",
+                tags: ["Hybride", "Flexible", "Complexe"]
+            },
+            {
+                id: 26,
+                name: "Glassmorphism",
+                description: "Design utilisant des effets de transparence et de flou pour créer des interfaces modernes et aériennes.",
+                usage: "Applications modernes, dashboards, interfaces mobiles.",
+                technique: "backdrop-filter, rgba colors, gradients avec transparence.",
+                advantage: "Effet visuel moderne et élégant, sensation de profondeur.",
+                disadvantage: "Performance sur les anciens navigateurs, accessibilité des contrastes.",
+                tags: ["Moderne", "Transparent", "Profondeur"]
+            },
+            {
+                id: 27,
+                name: "Neumorphism",
+                description: "Style qui simule des éléments extrudés avec des ombres douces pour un effet 3D subtil.",
+                usage: "Interfaces modernes, applications mobiles, boutons et cartes.",
+                technique: "Box-shadow avec ombres claires et sombres, couleurs de fond subtiles.",
+                advantage: "Look moderne et tactile, cohérence visuelle.",
+                disadvantage: "Problèmes de contraste et d'accessibilité.",
+                tags: ["3D", "Tactile", "Moderne"]
+            },
+            {
+                id: 28,
+                name: "Brutalism",
+                description: "Style intentionnellement brut et non poli, inspiré de l'architecture brutaliste.",
+                usage: "Sites artistiques, portfolios créatifs, marques audacieuses.",
+                technique: "Borders épaisses, couleurs vives, typographie forte, peu d'ornements.",
+                advantage: "Impact visuel fort, mémorable, chargé de personnalité.",
+                disadvantage: "Peut être perçu comme non professionnel, expérience utilisateur déroutante.",
+                tags: ["Audacieux", "Artistique", "Minimal"]
+            },
+            {
+                id: 29,
+                name: "Isometric",
+                description: "Représentation en perspective isométrique pour des interfaces 3D sans point de fuite.",
+                usage: "Jeux, visualisations de données, interfaces créatives.",
+                technique: "Transformations CSS 3D, SVG, calculs de perspective.",
+                advantage: "Représentation spatiale claire, visuellement engageante.",
+                disadvantage: "Complexité de mise en œuvre, contraintes d'espace.",
+                tags: ["3D", "Spatial", "Créatif"]
+            },
+            {
+                id: 30,
+                name: "Cyberpunk",
+                description: "Style inspiré de la science-fiction cyberpunk avec néons, grilles et éléments futuristes.",
+                usage: "Jeux, sites technologiques, œuvres artistiques.",
+                technique: "Gradients néon, animations de lueur, motifs de grille.",
+                advantage: "Atmosphère immersive et futuriste, fort impact visuel.",
+                disadvantage: "Peut être surchargé, problèmes de lisibilité.",
+                tags: ["Futuriste", "Néon", "Immersif"]
+            },
+            {
+                id: 31,
+                name: "Adaptive UI",
+                description: "Interface qui s'adapte dynamiquement au contexte et aux préférences utilisateur.",
+                usage: "Applications intelligentes, interfaces contextuelles.",
+                technique: "CSS container queries, JavaScript contextuel, préférences utilisateur.",
+                advantage: "Expérience personnalisée, adaptabilité contextuelle.",
+                disadvantage: "Complexité de développement, maintenance accrue.",
+                tags: ["Adaptatif", "Intelligent", "Contextuel"]
+            },
+            {
+                id: 32,
+                name: "Voice UI",
+                description: "Interface optimisée pour les interactions vocales et les assistants intelligents.",
+                usage: "Applications vocales, assistants, interfaces mains libres.",
+                technique: "Web Speech API, design conversationnel, retours visuels audio.",
+                advantage: "Accessibilité, interaction mains libres, moderne.",
+                disadvantage: "Reconnaissance vocale imparfaite, interface moins dense.",
+                tags: ["Vocal", "Accessible", "Moderne"]
+            },
+            {
+                id: 33,
+                name: "AR/VR Ready",
+                description: "Interface préparée pour la réalité augmentée ou virtuelle avec éléments 3D et HUD.",
+                usage: "Applications AR/VR, visualisations 3D, expériences immersives.",
+                technique: "WebXR API, CSS 3D, Canvas, WebGL.",
+                advantage: "Expérience immersive, avant-garde technologique.",
+                disadvantage: "Compatibilité limitée, courbe d'apprentissage raide.",
+                tags: ["Immersif", "3D", "Avant-garde"]
+            },
+            {
+                id: 34,
+                name: "Data Visualization",
+                description: "Layout centré sur la visualisation de données avec graphiques et indicateurs.",
+                usage: "Analytics, tableaux de bord, rapports interactifs.",
+                technique: "SVG, Canvas, bibliothèques de visualisation (D3.js, Chart.js).",
+                advantage: "Compréhension intuitive des données, décisions éclairées.",
+                disadvantage: "Peut devenir complexe, performance avec grandes quantités de données.",
+                tags: ["Données", "Analytique", "Interactif"]
+            },
+            {
+                id: 35,
+                name: "Micro-interaction Heavy",
+                description: "Interface riche en micro-interactions et animations subtiles.",
+                usage: "Applications modernes, interfaces engageantes.",
+                technique: "CSS animations, Web Animations API, transitions complexes.",
+                advantage: "Expérience utilisateur engageante, feedback immédiat.",
+                disadvantage: "Performance, peut distraire si mal utilisé.",
+                tags: ["Animé", "Engageant", "Moderne"]
+            },
+            {
+                id: 36,
+                name: "AI Assistant",
+                description: "Interface centrée sur l'interaction avec une intelligence artificielle.",
+                usage: "Assistants virtuels, chatbots, interfaces conversationnelles.",
+                technique: "Design conversationnel, traitement du langage naturel.",
+                advantage: "Interaction naturelle, automatisation des tâches.",
+                disadvantage: "Limites de compréhension, attentes utilisateur élevées.",
+                tags: ["IA", "Conversationnel", "Intelligent"]
+            },
+            {
+                id: 37,
+                name: "Spatial Computing",
+                description: "Interface qui exploite l'espace 3D pour l'organisation du contenu.",
+                usage: "Applications spatiales, visualisations complexes.",
+                technique: "WebGL, Three.js, transformations 3D avancées.",
+                advantage: "Utilisation naturelle de l'espace, représentations complexes.",
+                disadvantage: "Complexité, performance, accessibilité.",
+                tags: ["3D", "Spatial", "Avancé"]
+            },
+            {
+                id: 38,
+                name: "Quantum UI",
+                description: "Concept expérimental inspiré de la physique quantique avec états superposés.",
+                usage: "Interfaces expérimentales, art digital, projets conceptuels.",
+                technique: "Animations complexes, probabilités, états multiples.",
+                advantage: "Innovation pure, expérience unique.",
+                disadvantage: "Conceptuel, peu d'applications pratiques.",
+                tags: ["Expérimental", "Innovant", "Conceptuel"]
+            },
+            {
+                id: 39,
+                name: "Biometric",
+                description: "Interface intégrant des éléments biométriques pour l'authentification et la personnalisation.",
+                usage: "Sécurité, santé, applications personnalisées.",
+                technique: "WebAuthn, capteurs biométriques, données de santé.",
+                advantage: "Sécurité renforcée, personnalisation poussée.",
+                disadvantage: "Vie privée, compatibilité limitée.",
+                tags: ["Sécurisé", "Personnalisé", "Santé"]
+            },
+            {
+                id: 40,
+                name: "Holographic",
+                description: "Style simulant des interfaces holographiques avec effets de lumière et transparence.",
+                usage: "Science-fiction, présentations futuristes, art digital.",
+                technique: "Effets de lueur, transparences, animations de lumière.",
+                advantage: "Effet futuriste spectaculaire, immersion.",
+                disadvantage: "Performance, accessibilité, utilisation pratique limitée.",
+                tags: ["Futuriste", "Immersif", "Artistique"]
+            }
+        ];
+
+        // Initialisation de l'application
+        document.addEventListener('DOMContentLoaded', function() {
+            const layoutsContainer = document.getElementById('layouts-container');
+            const layoutDetail = document.getElementById('layout-detail');
+            const closeDetail = document.getElementById('close-detail');
+            const detailContent = document.getElementById('detail-content');
+            const searchInput = document.getElementById('search');
+            const paletteButtons = document.querySelectorAll('.palette-btn');
+            const prevPageBtn = document.getElementById('prev-page');
+            const nextPageBtn = document.getElementById('next-page');
+            const pageInfo = document.getElementById('page-info');
+
+            let layouts = [];
+            let filteredLayouts = [];
+            let currentPage = 1;
+            const layoutsPerPage = 6;
+
+            // Création des objets Layout
+            function initializeLayouts() {
+                layouts = extendedLayoutsData.map(data => new Layout(
+                    data.id,
+                    data.name,
+                    data.description,
+                    data.usage,
+                    data.technique,
+                    data.advantage,
+                    data.disadvantage,
+                    data.tags
+                ));
+
+                filteredLayouts = [...layouts];
+                renderLayouts();
+            }
+
+            // Calcul du nombre total de pages
+            function getTotalPages() {
+                return Math.ceil(filteredLayouts.length / layoutsPerPage);
+            }
+
+            // Affichage des layouts pour la page courante
+            function renderLayouts() {
+                layoutsContainer.innerHTML = '';
+
+                const totalPages = getTotalPages();
+                const startIndex = (currentPage - 1) * layoutsPerPage;
+                const endIndex = startIndex + layoutsPerPage;
+                const layoutsToShow = filteredLayouts.slice(startIndex, endIndex);
+
+                layoutsToShow.forEach(layout => {
+                    layoutsContainer.innerHTML += layout.generateCard();
+                });
+
+                // Ajout des écouteurs d'événements pour les cartes
+                document.querySelectorAll('.layout-card').forEach(card => {
+                    card.addEventListener('click', function() {
+                        const layoutId = parseInt(this.getAttribute('data-id'));
+                        showLayoutDetail(layoutId);
+                    });
+                });
+
+                // Mise à jour de l'affichage de la pagination
+                updatePagination();
+            }
+
+            // Mise à jour de l'affichage de la pagination
+            function updatePagination() {
+                const totalPages = getTotalPages();
+                pageInfo.textContent = `Page ${currentPage} / ${totalPages}`;
+
+                // Désactiver/activer les boutons selon la page
+                prevPageBtn.disabled = currentPage === 1;
+                nextPageBtn.disabled = currentPage === totalPages;
+            }
+
+            // Navigation vers la page précédente
+            prevPageBtn.addEventListener('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderLayouts();
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+
+            // Navigation vers la page suivante
+            nextPageBtn.addEventListener('click', function() {
+                const totalPages = getTotalPages();
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderLayouts();
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+
+            // Affichage du détail d'un layout
+            function showLayoutDetail(layoutId) {
+                const layout = layouts.find(l => l.id === layoutId);
+                if (layout) {
+                    detailContent.innerHTML = layout.generateDetailView();
+                    layoutDetail.classList.add('active');
+                }
+            }
+
+            // Fermeture du détail
+            closeDetail.addEventListener('click', function() {
+                layoutDetail.classList.remove('active');
+            });
+
+            // Recherche
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                filteredLayouts = layouts.filter(layout =>
+                    layout.name.toLowerCase().includes(searchTerm) ||
+                    layout.description.toLowerCase().includes(searchTerm) ||
+                    layout.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+                );
+                currentPage = 1; // Retour à la première page lors d'une recherche
+                renderLayouts();
+            });
+
+            // Changement de palette
+            paletteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const palette = this.getAttribute('data-palette');
+                    document.body.className = palette;
+
+                    // Mise à jour de l'état actif
+                    paletteButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Initialisation
+            initializeLayouts();
+        });
+    </script>
+</body>
+
+</html>
