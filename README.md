@@ -17,31 +17,31 @@ Une galerie interactive présentant **40 layouts web modernes** avec aperçus vi
 
 ## 📁 Structure du projet
 
-- **`supplement.html`** : Le fichier unique contenant tout (HTML + CSS + JavaScript) ⭐
+- **`index.html`** : Le fichier unique contenant tout (HTML + CSS + JavaScript) ⭐
 
 C'est tout ! Un seul fichier à télécharger.
 
 ## 🚀 Utilisation
 
-### Option 1 : Téléchargement direct
+### Option 1 : Accès direct en ligne (recommandé)
 
-1. Téléchargez `supplement.html`
+Accédez directement à la version en ligne :
+**https://jeanmarieprof.github.io/layoutFactory/**
+
+### Option 2 : Téléchargement direct
+
+1. Téléchargez `index.html`
 2. Ouvrez-le dans votre navigateur
 3. C'est tout ! ✨
 
-### Option 2 : Clone du dépôt
+### Option 3 : Clone du dépôt
 
 ```bash
 git clone https://github.com/JeanMarieProf/layoutFactory.git
 cd layoutFactory
 ```
 
-Puis ouvrez `supplement.html` dans votre navigateur.
-
-### Option 3 : GitHub Pages
-
-Accédez directement à la version en ligne :
-**https://jeanmarieprof.github.io/layoutFactory/supplement.html**
+Puis ouvrez `index.html` dans votre navigateur.
 
 ## 🎮 Comment utiliser la galerie
 
@@ -95,7 +95,7 @@ Accédez directement à la version en ligne :
 
 ## 🔧 Personnalisation
 
-Le fichier `supplement.html` est facile à personnaliser :
+Le fichier `index.html` est facile à personnaliser :
 
 - **Ajouter des layouts** : Ajoutez des objets dans le tableau `extendedLayoutsData`
 - **Modifier la pagination** : Changez la valeur de `layoutsPerPage` (actuellement 6)
