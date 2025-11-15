@@ -198,10 +198,11 @@
         .layout-card {
             background-color: var(--card-bg);
             border-radius: 8px;
-            overflow: hidden;
             box-shadow: var(--shadow);
+            border: 1px solid #ddd;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
+            padding: 15px;
         }
 
         .layout-card:hover {
@@ -211,7 +212,8 @@
 
         .layout-preview {
             height: 180px;
-            background-color: var(--secondary-color);
+            background-color: #f0f0f0;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -219,6 +221,7 @@
             font-weight: bold;
             position: relative;
             overflow: hidden;
+            margin-bottom: 12px;
         }
 
         .layout-id {
@@ -234,7 +237,7 @@
         }
 
         .layout-info {
-            padding: 15px;
+            padding: 0;
         }
 
         .layout-name {
@@ -1241,15 +1244,15 @@
             flex-direction: column;
             height: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+            background: linear-gradient(135deg, rgba(74, 111, 165, 0.3), rgba(107, 140, 188, 0.2));
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(74, 111, 165, 0.4);
         }
 
         .glassmorphism .card {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(74, 111, 165, 0.25);
             border-radius: 8px;
             padding: 10px;
             margin-bottom: 8px;
@@ -1257,14 +1260,14 @@
 
         .glassmorphism .card-header {
             height: 12px;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(74, 111, 165, 0.5);
             border-radius: 4px;
             margin-bottom: 6px;
         }
 
         .glassmorphism .card-content {
             height: 20px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(74, 111, 165, 0.3);
             border-radius: 4px;
         }
 
@@ -2003,6 +2006,53 @@
                 this.tags = tags;
             }
 
+            // Méthode statique pour générer le script all_layouts.js
+            static createScript() {
+                const layouts = Layout.getAllLayouts();
+                const cssStyles = document.querySelector('style').textContent;
+
+                let script = '// ========================================\n';
+                script += '// 40 INSTANCES DE LAYOUT\n';
+                script += '// ========================================\n\n';
+
+                layouts.forEach(layout => {
+                    // Extraire le CSS pour ce layout
+                    const match = layout.generateVisualPreview().match(/class="preview-container ([^"]+)"/);
+                    const cssClass = match ? match[1] : '';
+                    const cssRegex = new RegExp(`/\\* Layout ${layout.id}:.*?\\*/([^/]*?)(?=/\\* Layout|$)`, 's');
+                    const cssMatch = cssStyles.match(cssRegex);
+                    const css = cssMatch ? cssMatch[1].trim().replace(/\s+/g, ' ') : '';
+
+                    // Extraire le HTML
+                    const html = layout.generateVisualPreview().replace(/\s+/g, ' ').trim();
+
+                    // Générer le code
+                    script += `// Layout ${layout.id}: ${layout.name}\n`;
+                    script += `const layout${layout.id} = new Layout(\n`;
+                    script += `    \`${css}\`,\n`;
+                    script += `    ${JSON.stringify({
+                        id: layout.id,
+                        name: layout.name,
+                        description: layout.description,
+                        usage: layout.usage,
+                        technique: layout.technique,
+                        advantage: layout.advantage,
+                        disadvantage: layout.disadvantage,
+                        tags: layout.tags
+                    }, null, 8)},\n`;
+                    script += `    \`${html}\`\n`;
+                    script += `);\n\n`;
+                });
+
+                // Ajouter le tableau final
+                script += '// Tableau de tous les layouts\n';
+                script += 'const allLayouts = [';
+                script += layouts.map(l => `layout${l.id}`).join(', ');
+                script += '];\n';
+
+                return script;
+            }
+
             // Génère la carte pour la grille
             generateCard() {
                 return `
@@ -2561,409 +2611,424 @@
                         return `<div style="display: flex; align-items: center; justify-content: center; height: 100%;">Aperçu du layout ${this.id}</div>`;
                 }
             }
-        }
 
-        const extendedLayoutsData = [{
-                id: 1,
-                name: "Colonne unique",
-                description: "Un seul flux vertical de contenu (titre → texte → médias).",
-                usage: "Articles de blog, pages de documentation, pages marketing mobiles-first.",
-                technique: "max-width centré, padding, flow normal. Très simple à rendre accessible.",
-                advantage: "Lisibilité optimale sur mobile.",
-                disadvantage: "Peu d'options latérales pour navigation/CTA.",
-                tags: ["Simple", "Mobile-first", "Accessible"]
-            },
-            {
-                id: 2,
-                name: "Sidebar fixe",
-                description: "Contenu principal + barre latérale (navigation, filtres, widgets).",
-                usage: "Dashboards, panels d'administration, sites e-commerce avec filtres.",
-                technique: "CSS Grid / Flexbox ou position: sticky pour sidebar. Cacher ou basculer en off-canvas sur mobile.",
-                advantage: "Navigation facile et accès rapide aux fonctionnalités.",
-                disadvantage: "Peut réduire l'espace de contenu principal sur petits écrans.",
-                tags: ["Navigation", "Dashboard", "Responsive"]
-            },
-            {
-                id: 3,
-                name: "Trois colonnes",
-                description: "Menu / contenu principal / outils secondaires.",
-                usage: "IDE web, panneaux d'édition, portails d'info complexes.",
-                technique: "CSS Grid à 3 colonnes. Réduire à 1 ou 2 colonnes selon breakpoint.",
-                advantage: "Beaucoup d'information accessible simultanément.",
-                disadvantage: "Complexe à gérer sur petits écrans.",
-                tags: ["Complexe", "Productivité", "Multi-panneaux"]
-            },
-            {
-                id: 4,
-                name: "Layout en grille de cartes",
-                description: "Série de cartes (produits, posts, ressources) organisées en grille.",
-                usage: "Catalogue, galerie, blog index.",
-                technique: "grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) pour responsive; gap pour espacement.",
-                advantage: "Présentation visuelle attractive et organisée.",
-                disadvantage: "Peut nécessiter beaucoup d'espace vertical.",
-                tags: ["Visuel", "Catalogue", "Responsive"]
-            },
-            {
-                id: 5,
-                name: "Hero + contenu",
-                description: "Grand bandeau d'ouverture (image/CTA) suivi de sections modulaires.",
-                usage: "Landing pages, pages produit.",
-                technique: "vh pour hero; sections en container avec max-width.",
-                advantage: "Impact visuel fort et parcours utilisateur guidé.",
-                disadvantage: "Peut augmenter le temps de chargement.",
-                tags: ["Marketing", "Conversion", "Visuel"]
-            },
-            {
-                id: 6,
-                name: "Split-screen",
-                description: "Page scindée en deux verticalement (texte vs image / deux produits).",
-                usage: "Présentation produit comparatif, page d'accueil créative.",
-                technique: "Flexbox ou Grid 2 colonnes, prévoir collapse en stack sur mobile.",
-                advantage: "Comparaison directe et design moderne.",
-                disadvantage: "Peut être difficile à équilibrer visuellement.",
-                tags: ["Moderne", "Comparaison", "Créatif"]
-            },
-            {
-                id: 7,
-                name: "Off-canvas navigation",
-                description: "Menu caché qui glisse depuis un côté (mobile ou desktop).",
-                usage: "Navigation mobile, webapps où l'espace doit rester libre.",
-                technique: "Transform + transition ou position: fixed; accessibilité : focus trap, aria attributes.",
-                advantage: "Économie d'espace et expérience utilisateur moderne.",
-                disadvantage: "Navigation moins visible (peut réduire la découvrabilité).",
-                tags: ["Mobile", "Espace", "Moderne"]
-            },
-            {
-                id: 8,
-                name: "Layout « App shell »",
-                description: "En-tête + barre latérale + zone de contenu dynamique (route-based).",
-                usage: "Applications web (mail, CRM, IDE).",
-                technique: "Shell chargé une fois ; contenu injecté via router/JS. Cache service worker possible.",
-                advantage: "Performance et expérience utilisateur fluide.",
-                disadvantage: "Complexité de développement accrue.",
-                tags: ["SPA", "Performance", "Application"]
-            },
-            {
-                id: 9,
-                name: "Cards + Masonry",
-                description: "Cartes de hauteurs variables organisées en colonnes.",
-                usage: "Galleries d'images, portfolios.",
-                technique: "Masonry JS ou grid-auto-rows + grid-row: span n calculé ; CSS Columns pour alternative.",
-                advantage: "Utilisation optimale de l'espace et design dynamique.",
-                disadvantage: "Peut être difficile à rendre accessible.",
-                tags: ["Gallerie", "Dynamique", "Visuel"]
-            },
-            {
-                id: 10,
-                name: "Magazine / Newspaper",
-                description: "Grille asymétrique, articles de différentes tailles, éléments mis en avant.",
-                usage: "Sites média, magazines en ligne.",
-                technique: "CSS Grid avec zones nommées (grid-template-areas) pour contrôler mise en page.",
-                advantage: "Hiérarchie visuelle claire et design éditorial riche.",
-                disadvantage: "Complexité de mise en œuvre et maintenance.",
-                tags: ["Éditorial", "Hiérarchie", "Complexe"]
-            },
-            {
-                id: 11,
-                name: "Dashboard",
-                description: "Grille modulaire de widgets (statistiques, graphiques).",
-                usage: "Interfaces d'administration, analytics.",
-                technique: "CSS Grid + librairie ddraggable/resizable (interactions), gestion des breakpoints.",
-                advantage: "Personnalisation et vue d'ensemble des données.",
-                disadvantage: "Peut devenir désordonné si mal organisé.",
-                tags: ["Données", "Modulaire", "Personnalisable"]
-            },
-            {
-                id: 12,
-                name: "Tableau / liste détaillée",
-                description: "Tableaux riches, avec en-ligne actions, colonnes triables.",
-                usage: "Back-office, CRM, listes d'utilisateurs.",
-                technique: "<table> pour données tabulaires ; responsive : collapse to cards; ARIA pour tri.",
-                advantage: "Présentation structurée de données complexes.",
-                disadvantage: "Peut être difficile à rendre responsive.",
-                tags: ["Données", "Tableau", "Structured"]
-            },
-            {
-                id: 13,
-                name: "Galerie / Lightbox-centric",
-                description: "Grille d'images + ouverture en lightbox/visu plein écran.",
-                usage: "Photographies, portfolios.",
-                technique: "Grid + lightbox accessible (focus trap, navigation clavier).",
-                advantage: "Expérience immersive pour le contenu visuel.",
-                disadvantage: "Peut être lourd en termes de performance.",
-                tags: ["Visuel", "Immersion", "Gallerie"]
-            },
-            {
-                id: 14,
-                name: "Timeline / Fil d'événements",
-                description: "Liste ordonnée chronologiquement (verticale ou horizontale).",
-                usage: "Historique, roadmap, journaux.",
-                technique: "Flexbox vertical + marqueurs, ou horizontal scroll pour timeline longue.",
-                advantage: "Représentation claire de la chronologie.",
-                disadvantage: "Peut prendre beaucoup d'espace vertical.",
-                tags: ["Chronologie", "Historique", "Narrative"]
-            },
-            {
-                id: 15,
-                name: "Landing minimal / centered CTA",
-                description: "Centre unique d'attention avec CTA, peu de navigation.",
-                usage: "Pages de conversion, annonces.",
-                technique: "Flexbox centré verticalement (min-height:100vh), contraste fort, micro-interactions.",
-                advantage: "Focus total sur l'action principale.",
-                disadvantage: "Peut manquer de contexte ou d'information supplémentaire.",
-                tags: ["Conversion", "Minimal", "Focus"]
-            },
-            {
-                id: 16,
-                name: "Map-centric",
-                description: "Grande carte avec panneau(s) d'information/clustering.",
-                usage: "Services géolocalisés, immobilier, planificateur d'itinéraire.",
-                technique: "Map (Leaflet/Mapbox) en background ou iframe ; sidebar pour détails. Attention au lazy load.",
-                advantage: "Visualisation géographique intuitive.",
-                disadvantage: "Performance peut être affectée avec des cartes complexes.",
-                tags: ["Géolocalisation", "Carte", "Interactif"]
-            },
-            {
-                id: 17,
-                name: "Full-bleed sections",
-                description: "Sections alternées qui s'étendent sur toute la largeur (images, couleurs).",
-                usage: "Sites modernes, storytelling, portfolio.",
-                technique: "Containers internes pour limiter le texte, background plein width.",
-                advantage: "Design moderne et impact visuel fort.",
-                disadvantage: "Peut être difficile à équilibrer sur tous les écrans.",
-                tags: ["Moderne", "Visuel", "Storytelling"]
-            },
-            {
-                id: 18,
-                name: "Parallax / Scrollytelling",
-                description: "Effets de parallaxe ou sections animées lors du scroll.",
-                usage: "Récits immersifs, sites de marque.",
-                technique: "CSS background-attachment (limité) ou JS Scroll-based (IntersectionObserver / requestAnimationFrame). Attention perf & accessibilité.",
-                advantage: "Expérience utilisateur immersive et engageante.",
-                disadvantage: "Problèmes potentiels de performance et accessibilité.",
-                tags: ["Animation", "Immersion", "Engagement"]
-            },
-            {
-                id: 19,
-                name: "Asymétrique / Broken grid",
-                description: "Layout volontairement non symétrique pour impact visuel.",
-                usage: "Créatifs, landing expérimental.",
-                technique: "CSS Grid et positionnement absolu ; penser au flow pour mobile.",
-                advantage: "Design unique et mémorable.",
-                disadvantage: "Peut nuire à la lisibilité et à l'expérience utilisateur.",
-                tags: ["Créatif", "Expérimental", "Unique"]
-            },
-            {
-                id: 20,
-                name: "Modal-centric / single action flow",
-                description: "Page simple qui déclenche des workflows en modales (ex : formulaire pas à pas).",
-                usage: "Checkout rapide, onboarding.",
-                technique: "Focus management, fallback keyboard navigation, accessible forms.",
-                advantage: "Processus guidé et focalisé.",
-                disadvantage: "Peut interrompre le flux de navigation principal.",
-                tags: ["Workflow", "Formulaire", "Guidé"]
-            },
-            {
-                id: 21,
-                name: "Progressive Reveal / Accordion-heavy",
-                description: "Contenu empaqueté en accordéons / sections rétractables.",
-                usage: "FAQ, docs compressées, panneaux de configuration.",
-                technique: "<details> natif ou JS ; conserver aria-expanded.",
-                advantage: "Économie d'espace et organisation hiérarchique.",
-                disadvantage: "Contenu moins visible (nécessite des interactions).",
-                tags: ["Organisation", "Espace", "Hiérarchique"]
-            },
-            {
-                id: 22,
-                name: "Search-first layout",
-                description: "Barre de recherche proéminente avec résultats dynamiques.",
-                usage: "Marketplaces, docs, knowledge base.",
-                technique: "Input-centric, debounce, suggestions accessible via aria-activedescendant.",
-                advantage: "Accès rapide au contenu recherché.",
-                disadvantage: "Peut négliger la navigation traditionnelle.",
-                tags: ["Recherche", "Rapidité", "Focalisé"]
-            },
-            {
-                id: 23,
-                name: "Multi-step flow / Wizard",
-                description: "Formulaire séquencé par étapes avec progression.",
-                usage: "Inscription complexe, configuration produit.",
-                technique: "Routerless state machine, sauvegarde d'état, gestion d'erreurs et validations.",
-                advantage: "Réduction de la complexité perçue.",
-                disadvantage: "Peut allonger le processus de complétion.",
-                tags: ["Formulaire", "Étapes", "Progression"]
-            },
-            {
-                id: 24,
-                name: "Embedded content-centric",
-                description: "Page construite autour de contenus tiers (vidéos, iframes, widgets).",
-                usage: "Portfolios avec embeds, agrégateurs.",
-                technique: "Lazy loading, sizes containers, sandboxing pour sécurité.",
-                advantage: "Intégration de contenus externes sans friction.",
-                disadvantage: "Dépendance à des services tiers et problèmes de performance potentiels.",
-                tags: ["Intégration", "Tiers", "Multimédia"]
-            },
-            {
-                id: 25,
-                name: "Hybrid desktop/immersive",
-                description: "Combinaison d'éléments de bureau traditionnels et d'expériences immersives.",
-                usage: "Applications web complexes, outils créatifs.",
-                technique: "Combinaison de plusieurs techniques selon les zones de l'interface.",
-                advantage: "Flexibilité et adaptation à différents types de contenu.",
-                disadvantage: "Risque de manque de cohérence visuelle.",
-                tags: ["Hybride", "Flexible", "Complexe"]
-            },
-            {
-                id: 26,
-                name: "Glassmorphism",
-                description: "Design utilisant des effets de transparence et de flou pour créer des interfaces modernes et aériennes.",
-                usage: "Applications modernes, dashboards, interfaces mobiles.",
-                technique: "backdrop-filter, rgba colors, gradients avec transparence.",
-                advantage: "Effet visuel moderne et élégant, sensation de profondeur.",
-                disadvantage: "Performance sur les anciens navigateurs, accessibilité des contrastes.",
-                tags: ["Moderne", "Transparent", "Profondeur"]
-            },
-            {
-                id: 27,
-                name: "Neumorphism",
-                description: "Style qui simule des éléments extrudés avec des ombres douces pour un effet 3D subtil.",
-                usage: "Interfaces modernes, applications mobiles, boutons et cartes.",
-                technique: "Box-shadow avec ombres claires et sombres, couleurs de fond subtiles.",
-                advantage: "Look moderne et tactile, cohérence visuelle.",
-                disadvantage: "Problèmes de contraste et d'accessibilité.",
-                tags: ["3D", "Tactile", "Moderne"]
-            },
-            {
-                id: 28,
-                name: "Brutalism",
-                description: "Style intentionnellement brut et non poli, inspiré de l'architecture brutaliste.",
-                usage: "Sites artistiques, portfolios créatifs, marques audacieuses.",
-                technique: "Borders épaisses, couleurs vives, typographie forte, peu d'ornements.",
-                advantage: "Impact visuel fort, mémorable, chargé de personnalité.",
-                disadvantage: "Peut être perçu comme non professionnel, expérience utilisateur déroutante.",
-                tags: ["Audacieux", "Artistique", "Minimal"]
-            },
-            {
-                id: 29,
-                name: "Isometric",
-                description: "Représentation en perspective isométrique pour des interfaces 3D sans point de fuite.",
-                usage: "Jeux, visualisations de données, interfaces créatives.",
-                technique: "Transformations CSS 3D, SVG, calculs de perspective.",
-                advantage: "Représentation spatiale claire, visuellement engageante.",
-                disadvantage: "Complexité de mise en œuvre, contraintes d'espace.",
-                tags: ["3D", "Spatial", "Créatif"]
-            },
-            {
-                id: 30,
-                name: "Cyberpunk",
-                description: "Style inspiré de la science-fiction cyberpunk avec néons, grilles et éléments futuristes.",
-                usage: "Jeux, sites technologiques, œuvres artistiques.",
-                technique: "Gradients néon, animations de lueur, motifs de grille.",
-                advantage: "Atmosphère immersive et futuriste, fort impact visuel.",
-                disadvantage: "Peut être surchargé, problèmes de lisibilité.",
-                tags: ["Futuriste", "Néon", "Immersif"]
-            },
-            {
-                id: 31,
-                name: "Adaptive UI",
-                description: "Interface qui s'adapte dynamiquement au contexte et aux préférences utilisateur.",
-                usage: "Applications intelligentes, interfaces contextuelles.",
-                technique: "CSS container queries, JavaScript contextuel, préférences utilisateur.",
-                advantage: "Expérience personnalisée, adaptabilité contextuelle.",
-                disadvantage: "Complexité de développement, maintenance accrue.",
-                tags: ["Adaptatif", "Intelligent", "Contextuel"]
-            },
-            {
-                id: 32,
-                name: "Voice UI",
-                description: "Interface optimisée pour les interactions vocales et les assistants intelligents.",
-                usage: "Applications vocales, assistants, interfaces mains libres.",
-                technique: "Web Speech API, design conversationnel, retours visuels audio.",
-                advantage: "Accessibilité, interaction mains libres, moderne.",
-                disadvantage: "Reconnaissance vocale imparfaite, interface moins dense.",
-                tags: ["Vocal", "Accessible", "Moderne"]
-            },
-            {
-                id: 33,
-                name: "AR/VR Ready",
-                description: "Interface préparée pour la réalité augmentée ou virtuelle avec éléments 3D et HUD.",
-                usage: "Applications AR/VR, visualisations 3D, expériences immersives.",
-                technique: "WebXR API, CSS 3D, Canvas, WebGL.",
-                advantage: "Expérience immersive, avant-garde technologique.",
-                disadvantage: "Compatibilité limitée, courbe d'apprentissage raide.",
-                tags: ["Immersif", "3D", "Avant-garde"]
-            },
-            {
-                id: 34,
-                name: "Data Visualization",
-                description: "Layout centré sur la visualisation de données avec graphiques et indicateurs.",
-                usage: "Analytics, tableaux de bord, rapports interactifs.",
-                technique: "SVG, Canvas, bibliothèques de visualisation (D3.js, Chart.js).",
-                advantage: "Compréhension intuitive des données, décisions éclairées.",
-                disadvantage: "Peut devenir complexe, performance avec grandes quantités de données.",
-                tags: ["Données", "Analytique", "Interactif"]
-            },
-            {
-                id: 35,
-                name: "Micro-interaction Heavy",
-                description: "Interface riche en micro-interactions et animations subtiles.",
-                usage: "Applications modernes, interfaces engageantes.",
-                technique: "CSS animations, Web Animations API, transitions complexes.",
-                advantage: "Expérience utilisateur engageante, feedback immédiat.",
-                disadvantage: "Performance, peut distraire si mal utilisé.",
-                tags: ["Animé", "Engageant", "Moderne"]
-            },
-            {
-                id: 36,
-                name: "AI Assistant",
-                description: "Interface centrée sur l'interaction avec une intelligence artificielle.",
-                usage: "Assistants virtuels, chatbots, interfaces conversationnelles.",
-                technique: "Design conversationnel, traitement du langage naturel.",
-                advantage: "Interaction naturelle, automatisation des tâches.",
-                disadvantage: "Limites de compréhension, attentes utilisateur élevées.",
-                tags: ["IA", "Conversationnel", "Intelligent"]
-            },
-            {
-                id: 37,
-                name: "Spatial Computing",
-                description: "Interface qui exploite l'espace 3D pour l'organisation du contenu.",
-                usage: "Applications spatiales, visualisations complexes.",
-                technique: "WebGL, Three.js, transformations 3D avancées.",
-                advantage: "Utilisation naturelle de l'espace, représentations complexes.",
-                disadvantage: "Complexité, performance, accessibilité.",
-                tags: ["3D", "Spatial", "Avancé"]
-            },
-            {
-                id: 38,
-                name: "Quantum UI",
-                description: "Concept expérimental inspiré de la physique quantique avec états superposés.",
-                usage: "Interfaces expérimentales, art digital, projets conceptuels.",
-                technique: "Animations complexes, probabilités, états multiples.",
-                advantage: "Innovation pure, expérience unique.",
-                disadvantage: "Conceptuel, peu d'applications pratiques.",
-                tags: ["Expérimental", "Innovant", "Conceptuel"]
-            },
-            {
-                id: 39,
-                name: "Biometric",
-                description: "Interface intégrant des éléments biométriques pour l'authentification et la personnalisation.",
-                usage: "Sécurité, santé, applications personnalisées.",
-                technique: "WebAuthn, capteurs biométriques, données de santé.",
-                advantage: "Sécurité renforcée, personnalisation poussée.",
-                disadvantage: "Vie privée, compatibilité limitée.",
-                tags: ["Sécurisé", "Personnalisé", "Santé"]
-            },
-            {
-                id: 40,
-                name: "Holographic",
-                description: "Style simulant des interfaces holographiques avec effets de lumière et transparence.",
-                usage: "Science-fiction, présentations futuristes, art digital.",
-                technique: "Effets de lueur, transparences, animations de lumière.",
-                advantage: "Effet futuriste spectaculaire, immersion.",
-                disadvantage: "Performance, accessibilité, utilisation pratique limitée.",
-                tags: ["Futuriste", "Immersif", "Artistique"]
+            // Méthode statique qui retourne tous les layouts
+            static getAllLayouts() {
+                const layoutsData = [{
+                        id: 1,
+                        name: "Colonne unique",
+                        description: "Un seul flux vertical de contenu (titre → texte → médias).",
+                        usage: "Articles de blog, pages de documentation, pages marketing mobiles-first.",
+                        technique: "max-width centré, padding, flow normal. Très simple à rendre accessible.",
+                        advantage: "Lisibilité optimale sur mobile.",
+                        disadvantage: "Peu d'options latérales pour navigation/CTA.",
+                        tags: ["Simple", "Mobile-first", "Accessible"]
+                    },
+                    {
+                        id: 2,
+                        name: "Sidebar fixe",
+                        description: "Contenu principal + barre latérale (navigation, filtres, widgets).",
+                        usage: "Dashboards, panels d'administration, sites e-commerce avec filtres.",
+                        technique: "CSS Grid / Flexbox ou position: sticky pour sidebar. Cacher ou basculer en off-canvas sur mobile.",
+                        advantage: "Navigation facile et accès rapide aux fonctionnalités.",
+                        disadvantage: "Peut réduire l'espace de contenu principal sur petits écrans.",
+                        tags: ["Navigation", "Dashboard", "Responsive"]
+                    },
+                    {
+                        id: 3,
+                        name: "Trois colonnes",
+                        description: "Menu / contenu principal / outils secondaires.",
+                        usage: "IDE web, panneaux d'édition, portails d'info complexes.",
+                        technique: "CSS Grid à 3 colonnes. Réduire à 1 ou 2 colonnes selon breakpoint.",
+                        advantage: "Beaucoup d'information accessible simultanément.",
+                        disadvantage: "Complexe à gérer sur petits écrans.",
+                        tags: ["Complexe", "Productivité", "Multi-panneaux"]
+                    },
+                    {
+                        id: 4,
+                        name: "Layout en grille de cartes",
+                        description: "Série de cartes (produits, posts, ressources) organisées en grille.",
+                        usage: "Catalogue, galerie, blog index.",
+                        technique: "grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) pour responsive; gap pour espacement.",
+                        advantage: "Présentation visuelle attractive et organisée.",
+                        disadvantage: "Peut nécessiter beaucoup d'espace vertical.",
+                        tags: ["Visuel", "Catalogue", "Responsive"]
+                    },
+                    {
+                        id: 5,
+                        name: "Hero + contenu",
+                        description: "Grand bandeau d'ouverture (image/CTA) suivi de sections modulaires.",
+                        usage: "Landing pages, pages produit.",
+                        technique: "vh pour hero; sections en container avec max-width.",
+                        advantage: "Impact visuel fort et parcours utilisateur guidé.",
+                        disadvantage: "Peut augmenter le temps de chargement.",
+                        tags: ["Marketing", "Conversion", "Visuel"]
+                    },
+                    {
+                        id: 6,
+                        name: "Split-screen",
+                        description: "Page scindée en deux verticalement (texte vs image / deux produits).",
+                        usage: "Présentation produit comparatif, page d'accueil créative.",
+                        technique: "Flexbox ou Grid 50/50. Passer en colonne sur mobile.",
+                        advantage: "Équilibre visuel et comparaison facile.",
+                        disadvantage: "Peut être difficile à lire sur petits écrans.",
+                        tags: ["Créatif", "Comparaison", "Visuel"]
+                    },
+                    {
+                        id: 7,
+                        name: "Off-canvas menu",
+                        description: "Menu caché hors écran, révélé par un bouton (hamburger).",
+                        usage: "Apps mobiles, sites responsive avec beaucoup de navigation.",
+                        technique: "transform: translateX(-100%) + transition. Toggle via JS.",
+                        advantage: "Économise l'espace écran.",
+                        disadvantage: "Navigation moins visible.",
+                        tags: ["Mobile", "Navigation", "UX"]
+                    },
+                    {
+                        id: 8,
+                        name: "App shell",
+                        description: "Header/footer fixes, contenu scrollable au centre (PWA pattern).",
+                        usage: "Progressive Web Apps, applications web.",
+                        technique: "position: fixed pour header/footer; overflow-y: auto pour main.",
+                        advantage: "Navigation toujours accessible.",
+                        disadvantage: "Réduit l'espace de contenu visible.",
+                        tags: ["PWA", "Application", "Mobile"]
+                    },
+                    {
+                        id: 9,
+                        name: "Masonry (Pinterest-like)",
+                        description: "Grille de cartes de hauteurs variables, sans espaces vides.",
+                        usage: "Galeries d'images, portfolios, flux de contenu mixte.",
+                        technique: "CSS column-count ou librairie JS (Masonry.js). CSS Grid masonry (expérimental).",
+                        advantage: "Utilisation optimale de l'espace.",
+                        disadvantage: "Ordre de lecture peut être perturbé.",
+                        tags: ["Galerie", "Visuel", "Créatif"]
+                    },
+                    {
+                        id: 10,
+                        name: "Magazine layout",
+                        description: "Mise en page type magazine avec zones de tailles variées.",
+                        usage: "Sites d'actualités, blogs lifestyle.",
+                        technique: "CSS Grid avec grid-template-areas pour définir zones.",
+                        advantage: "Hiérarchie visuelle forte.",
+                        disadvantage: "Complexe à maintenir responsive.",
+                        tags: ["Éditorial", "Complexe", "Visuel"]
+                    },
+                    {
+                        id: 11,
+                        name: "Dashboard layout",
+                        description: "Widgets/cartes organisés en grille pour visualiser données.",
+                        usage: "Tableaux de bord, analytics, monitoring.",
+                        technique: "CSS Grid responsive avec cartes modulaires.",
+                        advantage: "Vue d'ensemble rapide des métriques.",
+                        disadvantage: "Peut être surchargé visuellement.",
+                        tags: ["Data", "Business", "Productivité"]
+                    },
+                    {
+                        id: 12,
+                        name: "Table-based layout",
+                        description: "Données tabulaires avec tri, filtres, pagination.",
+                        usage: "Admin panels, CRM, gestion de données.",
+                        technique: "Table HTML + CSS responsive (scroll horizontal ou cartes sur mobile).",
+                        advantage: "Idéal pour grandes quantités de données structurées.",
+                        disadvantage: "Difficile à rendre responsive.",
+                        tags: ["Data", "Admin", "Tableaux"]
+                    },
+                    {
+                        id: 13,
+                        name: "Gallery grid",
+                        description: "Grille d'images uniformes avec lightbox au clic.",
+                        usage: "Portfolios photo, galeries produits.",
+                        technique: "Grid avec aspect-ratio fixe; modal JS pour agrandir.",
+                        advantage: "Présentation claire et uniforme.",
+                        disadvantage: "Peut rogner les images.",
+                        tags: ["Images", "Portfolio", "Visuel"]
+                    },
+                    {
+                        id: 14,
+                        name: "Timeline vertical",
+                        description: "Événements chronologiques affichés verticalement.",
+                        usage: "Historique, processus, storytelling.",
+                        technique: "Flexbox vertical avec pseudo-éléments pour ligne centrale.",
+                        advantage: "Narration claire et chronologique.",
+                        disadvantage: "Peut être long sur mobile.",
+                        tags: ["Storytelling", "Chronologie", "Visuel"]
+                    },
+                    {
+                        id: 15,
+                        name: "Minimal landing",
+                        description: "Page d'atterrissage minimaliste (titre, CTA, peu de contenu).",
+                        usage: "Coming soon, capture email, présentation produit simple.",
+                        technique: "Centrage vertical/horizontal avec Flexbox.",
+                        advantage: "Focus total sur le message principal.",
+                        disadvantage: "Peu d'informations disponibles.",
+                        tags: ["Minimaliste", "Conversion", "Simple"]
+                    },
+                    {
+                        id: 16,
+                        name: "Map-based layout",
+                        description: "Carte interactive (Google Maps, Leaflet) + panneau d'infos.",
+                        usage: "Localisateurs de magasins, apps de livraison, immobilier.",
+                        technique: "Carte en plein écran ou split avec sidebar. API de cartographie.",
+                        advantage: "Contexte géographique immédiat.",
+                        disadvantage: "Dépendance à une API tierce.",
+                        tags: ["Géolocalisation", "Interactif", "API"]
+                    },
+                    {
+                        id: 17,
+                        name: "Full-bleed images",
+                        description: "Images pleine largeur sans marges, texte superposé.",
+                        usage: "Portfolios créatifs, sites de mode, storytelling visuel.",
+                        technique: "width: 100vw; height: 100vh; object-fit: cover.",
+                        advantage: "Impact visuel maximal.",
+                        disadvantage: "Accessibilité du texte à gérer (contraste).",
+                        tags: ["Visuel", "Créatif", "Immersif"]
+                    },
+                    {
+                        id: 18,
+                        name: "Parallax scrolling",
+                        description: "Éléments de fond défilent à vitesse différente du contenu.",
+                        usage: "Sites narratifs, landing pages créatives.",
+                        technique: "transform: translateY() basé sur scroll position (JS).",
+                        advantage: "Effet de profondeur et d'immersion.",
+                        disadvantage: "Peut causer des problèmes de performance et d'accessibilité.",
+                        tags: ["Animation", "Créatif", "Storytelling"]
+                    },
+                    {
+                        id: 19,
+                        name: "Asymmetric layout",
+                        description: "Disposition volontairement déséquilibrée pour effet artistique.",
+                        usage: "Portfolios créatifs, sites d'agence.",
+                        technique: "CSS Grid avec colonnes/lignes de tailles variées.",
+                        advantage: "Originalité et dynamisme visuel.",
+                        disadvantage: "Peut nuire à la lisibilité.",
+                        tags: ["Créatif", "Artistique", "Moderne"]
+                    },
+                    {
+                        id: 20,
+                        name: "Modal-centric",
+                        description: "Contenu principal affiché dans des modals/overlays.",
+                        usage: "Galeries, formulaires multi-étapes, wizards.",
+                        technique: "position: fixed; z-index élevé; backdrop semi-transparent.",
+                        advantage: "Focus sur une tâche à la fois.",
+                        disadvantage: "Peut frustrer si mal implémenté (fermeture difficile).",
+                        tags: ["UX", "Interactif", "Focus"]
+                    },
+                    {
+                        id: 21,
+                        name: "Accordion layout",
+                        description: "Sections repliables pour organiser beaucoup de contenu.",
+                        usage: "FAQ, documentation, menus de navigation.",
+                        technique: "details/summary HTML ou div + JS toggle.",
+                        advantage: "Économise l'espace vertical.",
+                        disadvantage: "Contenu caché peut être manqué.",
+                        tags: ["Organisation", "Mobile", "UX"]
+                    },
+                    {
+                        id: 22,
+                        name: "Search-first layout",
+                        description: "Barre de recherche proéminente, résultats en temps réel.",
+                        usage: "Sites e-commerce, bases de connaissances, annuaires.",
+                        technique: "Input focus au chargement; AJAX pour résultats instantanés.",
+                        advantage: "Accès rapide à l'information.",
+                        disadvantage: "Nécessite une bonne indexation/recherche backend.",
+                        tags: ["Recherche", "UX", "Performance"]
+                    },
+                    {
+                        id: 23,
+                        name: "Multi-step form",
+                        description: "Formulaire divisé en étapes avec indicateur de progression.",
+                        usage: "Checkout e-commerce, onboarding, questionnaires.",
+                        technique: "Afficher/cacher sections via JS; progress bar.",
+                        advantage: "Moins intimidant qu'un long formulaire.",
+                        disadvantage: "Peut rallonger le processus perçu.",
+                        tags: ["Formulaire", "UX", "Conversion"]
+                    },
+                    {
+                        id: 24,
+                        name: "Embedded content layout",
+                        description: "Intégration de contenu tiers (vidéos, tweets, cartes).",
+                        usage: "Articles de blog, pages de ressources.",
+                        technique: "iframe, embed, ou API widgets (YouTube, Twitter).",
+                        advantage: "Enrichit le contenu facilement.",
+                        disadvantage: "Dépendance externe, performance.",
+                        tags: ["Contenu", "Intégration", "Médias"]
+                    },
+                    {
+                        id: 25,
+                        name: "Hybrid mobile/desktop",
+                        description: "Layout qui s'adapte radicalement entre mobile et desktop.",
+                        usage: "Apps web complexes, sites e-commerce.",
+                        technique: "Media queries + composants conditionnels.",
+                        advantage: "Expérience optimale sur chaque device.",
+                        disadvantage: "Complexité de développement et maintenance.",
+                        tags: ["Responsive", "Adaptatif", "Complexe"]
+                    },
+                    {
+                        id: 26,
+                        name: "Glassmorphism",
+                        description: "Design utilisant des effets de transparence et de flou pour créer des interfaces modernes et aériennes.",
+                        usage: "Applications modernes, dashboards, interfaces mobiles.",
+                        technique: "backdrop-filter, rgba colors, gradients avec transparence.",
+                        advantage: "Effet visuel moderne et élégant, sensation de profondeur.",
+                        disadvantage: "Performance sur les anciens navigateurs, accessibilité des contrastes.",
+                        tags: ["Moderne", "Transparent", "Profondeur"]
+                    },
+                    {
+                        id: 27,
+                        name: "Neumorphism",
+                        description: "Style qui simule des éléments extrudés avec des ombres douces pour un effet 3D subtil.",
+                        usage: "Interfaces modernes, applications mobiles, boutons et cartes.",
+                        technique: "Box-shadow avec ombres claires et sombres, couleurs de fond subtiles.",
+                        advantage: "Look moderne et tactile, cohérence visuelle.",
+                        disadvantage: "Problèmes de contraste et d'accessibilité.",
+                        tags: ["3D", "Tactile", "Moderne"]
+                    },
+                    {
+                        id: 28,
+                        name: "Brutalism",
+                        description: "Style intentionnellement brut et non poli, inspiré de l'architecture brutaliste.",
+                        usage: "Sites artistiques, portfolios créatifs, marques audacieuses.",
+                        technique: "Borders épaisses, couleurs vives, typographie forte, peu d'ornements.",
+                        advantage: "Impact visuel fort, mémorable, chargé de personnalité.",
+                        disadvantage: "Peut être perçu comme non professionnel, expérience utilisateur déroutante.",
+                        tags: ["Audacieux", "Artistique", "Minimal"]
+                    },
+                    {
+                        id: 29,
+                        name: "Isometric",
+                        description: "Représentation en perspective isométrique pour des interfaces 3D sans point de fuite.",
+                        usage: "Jeux, visualisations de données, interfaces créatives.",
+                        technique: "Transformations CSS 3D, SVG, calculs de perspective.",
+                        advantage: "Représentation spatiale claire, visuellement engageante.",
+                        disadvantage: "Complexité de mise en œuvre, contraintes d'espace.",
+                        tags: ["3D", "Spatial", "Créatif"]
+                    },
+                    {
+                        id: 30,
+                        name: "Cyberpunk",
+                        description: "Style inspiré de la science-fiction cyberpunk avec néons, grilles et éléments futuristes.",
+                        usage: "Jeux, sites technologiques, œuvres artistiques.",
+                        technique: "Gradients néon, animations de lueur, motifs de grille.",
+                        advantage: "Atmosphère immersive et futuriste, fort impact visuel.",
+                        disadvantage: "Peut être surchargé, problèmes de lisibilité.",
+                        tags: ["Futuriste", "Néon", "Immersif"]
+                    },
+                    {
+                        id: 31,
+                        name: "Adaptive UI",
+                        description: "Interface qui s'adapte dynamiquement au contexte et aux préférences utilisateur.",
+                        usage: "Applications intelligentes, interfaces contextuelles.",
+                        technique: "CSS container queries, JavaScript contextuel, préférences utilisateur.",
+                        advantage: "Expérience personnalisée, adaptabilité contextuelle.",
+                        disadvantage: "Complexité de développement, maintenance accrue.",
+                        tags: ["Adaptatif", "Intelligent", "Contextuel"]
+                    },
+                    {
+                        id: 32,
+                        name: "Voice UI",
+                        description: "Interface optimisée pour les interactions vocales et les assistants intelligents.",
+                        usage: "Applications vocales, assistants, interfaces mains libres.",
+                        technique: "Web Speech API, design conversationnel, retours visuels audio.",
+                        advantage: "Accessibilité, interaction mains libres, moderne.",
+                        disadvantage: "Reconnaissance vocale imparfaite, interface moins dense.",
+                        tags: ["Vocal", "Accessible", "Moderne"]
+                    },
+                    {
+                        id: 33,
+                        name: "AR/VR Ready",
+                        description: "Interface préparée pour la réalité augmentée ou virtuelle avec éléments 3D et HUD.",
+                        usage: "Applications AR/VR, visualisations 3D, expériences immersives.",
+                        technique: "WebXR API, CSS 3D, Canvas, WebGL.",
+                        advantage: "Expérience immersive, avant-garde technologique.",
+                        disadvantage: "Compatibilité limitée, courbe d'apprentissage raide.",
+                        tags: ["Immersif", "3D", "Avant-garde"]
+                    },
+                    {
+                        id: 34,
+                        name: "Data Visualization",
+                        description: "Layout centré sur la visualisation de données avec graphiques et indicateurs.",
+                        usage: "Analytics, tableaux de bord, rapports interactifs.",
+                        technique: "SVG, Canvas, bibliothèques de visualisation (D3.js, Chart.js).",
+                        advantage: "Compréhension intuitive des données, décisions éclairées.",
+                        disadvantage: "Peut devenir complexe, performance avec grandes quantités de données.",
+                        tags: ["Données", "Analytique", "Interactif"]
+                    },
+                    {
+                        id: 35,
+                        name: "Micro-interaction Heavy",
+                        description: "Interface riche en micro-interactions et animations subtiles.",
+                        usage: "Applications modernes, interfaces engageantes.",
+                        technique: "CSS animations, Web Animations API, transitions complexes.",
+                        advantage: "Expérience utilisateur engageante, feedback immédiat.",
+                        disadvantage: "Performance, peut distraire si mal utilisé.",
+                        tags: ["Animé", "Engageant", "Moderne"]
+                    },
+                    {
+                        id: 36,
+                        name: "AI Assistant",
+                        description: "Interface centrée sur l'interaction avec une intelligence artificielle.",
+                        usage: "Assistants virtuels, chatbots, interfaces conversationnelles.",
+                        technique: "Design conversationnel, traitement du langage naturel.",
+                        advantage: "Interaction naturelle, automatisation des tâches.",
+                        disadvantage: "Limites de compréhension, attentes utilisateur élevées.",
+                        tags: ["IA", "Conversationnel", "Intelligent"]
+                    },
+                    {
+                        id: 37,
+                        name: "Spatial Computing",
+                        description: "Interface qui exploite l'espace 3D pour l'organisation du contenu.",
+                        usage: "Applications spatiales, visualisations complexes.",
+                        technique: "WebGL, Three.js, transformations 3D avancées.",
+                        advantage: "Utilisation naturelle de l'espace, représentations complexes.",
+                        disadvantage: "Complexité, performance, accessibilité.",
+                        tags: ["3D", "Spatial", "Avancé"]
+                    },
+                    {
+                        id: 38,
+                        name: "Quantum UI",
+                        description: "Concept expérimental inspiré de la physique quantique avec états superposés.",
+                        usage: "Interfaces expérimentales, art digital, projets conceptuels.",
+                        technique: "Animations complexes, probabilités, états multiples.",
+                        advantage: "Innovation pure, expérience unique.",
+                        disadvantage: "Conceptuel, peu d'applications pratiques.",
+                        tags: ["Expérimental", "Innovant", "Conceptuel"]
+                    },
+                    {
+                        id: 39,
+                        name: "Biometric",
+                        description: "Interface intégrant des éléments biométriques pour l'authentification et la personnalisation.",
+                        usage: "Sécurité, santé, applications personnalisées.",
+                        technique: "WebAuthn, capteurs biométriques, données de santé.",
+                        advantage: "Sécurité renforcée, personnalisation poussée.",
+                        disadvantage: "Vie privée, compatibilité limitée.",
+                        tags: ["Sécurisé", "Personnalisé", "Santé"]
+                    },
+                    {
+                        id: 40,
+                        name: "Holographic",
+                        description: "Style simulant des interfaces holographiques avec effets de lumière et transparence.",
+                        usage: "Science-fiction, présentations futuristes, art digital.",
+                        technique: "Effets de lueur, transparences, animations de lumière.",
+                        advantage: "Effet futuriste spectaculaire, immersion.",
+                        disadvantage: "Performance, accessibilité, utilisation pratique limitée.",
+                        tags: ["Futuriste", "Immersif", "Artistique"]
+                    }
+                ];
+
+                // Convertir les données en instances de Layout
+                return layoutsData.map(data => new Layout(
+                    data.id,
+                    data.name,
+                    data.description,
+                    data.usage,
+                    data.technique,
+                    data.advantage,
+                    data.disadvantage,
+                    data.tags
+                ));
             }
-        ];
+        }
 
         // Initialisation de l'application
         document.addEventListener('DOMContentLoaded', function() {
@@ -2984,17 +3049,7 @@
 
             // Création des objets Layout
             function initializeLayouts() {
-                layouts = extendedLayoutsData.map(data => new Layout(
-                    data.id,
-                    data.name,
-                    data.description,
-                    data.usage,
-                    data.technique,
-                    data.advantage,
-                    data.disadvantage,
-                    data.tags
-                ));
-
+                layouts = Layout.getAllLayouts();
                 filteredLayouts = [...layouts];
                 renderLayouts();
             }
